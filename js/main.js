@@ -39,10 +39,12 @@ function onLocationError(e) {
     alert(e.message);
 }
 
-map.on('locationfound', onLocationFound);
-map.on('locationerror', onLocationError);
 
-map.locate({setView: true, maxZoom: 16});
+
+map.locate({
+    setView: true,
+    maxZoom: 16
+});
 
 var task_icon = {};
 
@@ -60,10 +62,10 @@ axios({
     mapData.forEach(function (item) {
         task_icon[item] = L.icon({
             iconUrl: './img/' + item + '_.png',
-        
-            iconSize:     [48, 48], // size of the icon
-            iconAnchor:   [24, 24], // point of the icon which will correspond to marker's location
-            popupAnchor:  [0, -18] // point from which the popup should open relative to the iconAnchor
+
+            iconSize: [48, 48], // size of the icon
+            iconAnchor: [24, 24], // point of the icon which will correspond to marker's location
+            popupAnchor: [0, -18] // point from which the popup should open relative to the iconAnchor
         });
     });
 
@@ -87,16 +89,20 @@ axios({
 
         var show_msg = "<div><h3>補給站名稱：" + element.site_name + '</h3><img src="' + element.image + '" width="200">' + '<br><a href=' + googleNavigation + ' target="_blank" style="font-size: 1.5em;">google\u5C0E\u822A</a>' + "</div>";
 
-        L.marker([element.lat, element.lng], {icon: task_icon[task]})
+        L.marker([element.lat, element.lng], {
+                icon: task_icon[task]
+            })
             .addTo(map)
             .bindPopup(show_msg);
     });
 
-    setTimeout(function () {
-        if (latlng_qs.lat && latlng_qs.lng) {
-            map.setView([latlng_qs.lat, latlng_qs.lng], 17);
-        }
-    })
+
+    if (latlng_qs.lat && latlng_qs.lng) {
+        map.setView([latlng_qs.lat, latlng_qs.lng], 17);
+    }else{
+        map.on('locationfound', onLocationFound);
+        map.on('locationerror', onLocationError);
+    }
 
 
 });
@@ -116,4 +122,3 @@ function navigation(LngLat, GPSLocation) {
     };
     return "";
 }
-
