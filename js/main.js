@@ -92,7 +92,7 @@ axios({
     });
 
     setTimeout(function () {
-        if (latlng.lat && latlng.lng) {
+        if (latlng_qs.lat && latlng_qs.lng) {
             map.panTo(latlng_qs);
             // map.panTo([41.142937, -8.534538]);
         }
