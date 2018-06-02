@@ -1,3 +1,5 @@
+(function(window){
+
 var url = 'https://script.google.com/macros/s/AKfycbyOkCaKC-q75jN8NPx4oxLvkcIyEJLDGZDKUuAZ_Rl9JufGr1Uf/exec';
 
 function getParameterByName(name, url) {
@@ -39,12 +41,10 @@ function onLocationError(e) {
     alert(e.message);
 }
 
-
-
-map.locate({
-    setView: true,
-    maxZoom: 16
-});
+// map.locate({
+//     setView: true,
+//     maxZoom: 16
+// });
 
 var task_icon = {};
 
@@ -99,7 +99,12 @@ axios({
 
     if (latlng_qs.lat && latlng_qs.lng) {
         map.setView([latlng_qs.lat, latlng_qs.lng], 17);
-    }else{
+    } else {
+        map.locate({
+            setView: true,
+            maxZoom: 16
+        });
+
         map.on('locationfound', onLocationFound);
         map.on('locationerror', onLocationError);
     }
@@ -122,3 +127,5 @@ function navigation(LngLat, GPSLocation) {
     };
     return "";
 }
+
+})(window)
