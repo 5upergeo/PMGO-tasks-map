@@ -95,7 +95,6 @@ axios({
         if (latlng_qs.lat && latlng_qs.lng) {
             map.setView([latlng_qs.lat, latlng_qs.lng], 17);
         }
-
     })
 
 
