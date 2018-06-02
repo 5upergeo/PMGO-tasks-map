@@ -10,7 +10,8 @@ function getParameterByName(name, url) {
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
-var map = L.map('map').fitWorld();
+var map = L.map('map')
+    .setView([25.046266, 121.517406], 15);
 
 L.tileLayer('https://mt{s}.google.com/vt/x={x}&y={y}&z={z}&hl=zh-TW', {
     id: 'streets',
