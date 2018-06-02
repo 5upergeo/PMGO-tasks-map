@@ -1,5 +1,15 @@
 var url = 'https://script.google.com/macros/s/AKfycbyOkCaKC-q75jN8NPx4oxLvkcIyEJLDGZDKUuAZ_Rl9JufGr1Uf/exec';
 
+function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
 var map = L.map('map').fitWorld();
 
 L.tileLayer('https://mt{s}.google.com/vt/x={x}&y={y}&z={z}&hl=zh-TW', {
@@ -7,6 +17,11 @@ L.tileLayer('https://mt{s}.google.com/vt/x={x}&y={y}&z={z}&hl=zh-TW', {
     subdomains: "012",
     // attribution: 'Map data: &copy; Google'
 }).addTo(map);
+
+var latlng_qs = {
+    lat: Number(getParameterByName('lat')),
+    lng: Number(getParameterByName('lng'))
+}
 
 var latlng = "";
 
@@ -76,6 +91,15 @@ axios({
             .bindPopup(show_msg);
     });
 
+    setTimeout(function () {
+        if (latlng.lat && latlng.lng) {
+            map.panTo(latlng_qs);
+            // map.panTo([41.142937, -8.534538]);
+        }
+
+    })
+
+
 });
 
 //導航連結
@@ -93,3 +117,4 @@ function navigation(LngLat, GPSLocation) {
     };
     return "";
 }
+
