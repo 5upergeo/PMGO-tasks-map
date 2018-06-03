@@ -85,7 +85,7 @@
 
                 var googleNavigation = navigation(element.lat + ',' + element.lng, latlng.lat + ',' + latlng.lng);
 
-                var show_msg = "<div class='pokestops'><h3>" + element.site_name + '</h3><hr><p style="margin: 0;">' + task[0] + '<br>✔️回報確認數：' + element['T&F'].T + '<br>❌回報錯誤數：' + element['T&F'].F + '</p><div class="crop"><img src="' + element.image + '"></div>' + '<br><a href=' + googleNavigation + ' target="_blank" style="font-size: 1.5em;">google\u5C0E\u822A</a>' + "</div>";
+                var show_msg = "<div class='pokestops'><h3>" + element.site_name + '</h3><hr><p><b>' + task[0] + '</b><br>✔️回報確認數：' + element['T&F'].T + '<br>❌回報錯誤數：' + element['T&F'].F + '</p><div class="crop"><img src="' + element.image + '"></div>' + '<br><a href=' + googleNavigation + ' target="_blank" style="font-size: 1.5em;">google\u5C0E\u822A</a>' + "</div>";
 
                 L.marker([element.lat, element.lng], {
                         icon: task_icon[task[1]]

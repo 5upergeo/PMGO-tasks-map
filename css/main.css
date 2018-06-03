@@ -22,9 +22,14 @@ html, body, #map {
 .pokestops {
     text-align: center;
     margin-bottom: 0.5em;
+    width: 214px;
 }
 
 .pokestops h3{
     text-align: center;
     margin-bottom: 0;
+}
+
+.pokestops p{
+    margin-top: 0;
 }
