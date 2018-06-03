@@ -85,7 +85,7 @@
 
                 var googleNavigation = navigation(element.lat + ',' + element.lng, latlng.lat + ',' + latlng.lng);
 
-                var show_msg = "<div><h3 style='margin-bottom: 0;'>補給站名稱：" + element.site_name + '</h3><p style="margin: 0;">任務名稱：' + task[0] + '</p><img src="' + element.image + '" width="200">' + '<br><a href=' + googleNavigation + ' target="_blank" style="font-size: 1.5em;">google\u5C0E\u822A</a>' + "</div>";
+                var show_msg = "<div><h3 style='margin-bottom: 0;'>補給站名稱：" + element.site_name + '</h3><p style="margin: 0;">任務名稱：' + task[0] + '<br>已確認數量：' + element['T&F'].T + ', 已回報錯誤數量' + element['T&F'].F + '</p><img src="' + element.image + '" width="200">' + '<br><a href=' + googleNavigation + ' target="_blank" style="font-size: 1.5em;">google\u5C0E\u822A</a>' + "</div>";
 
                 L.marker([element.lat, element.lng], {
                         icon: task_icon[task[1]]
