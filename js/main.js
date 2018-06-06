@@ -80,7 +80,7 @@
 
             var mapData_ = r.data;
 
-            mapData_.map(function (element) {
+            mapData_.forEach(function (element) {
                 task = element.task.split('：');
 
                 var googleNavigation = navigation(element.lat + ',' + element.lng, latlng.lat + ',' + latlng.lng);
