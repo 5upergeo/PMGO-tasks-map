@@ -76,11 +76,11 @@
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
-        }).then(function (response) {
+        }).then(function (r) {
 
-            var mapData = response.data;
+            var mapData_ = r.data;
 
-            mapData.forEach(function (element) {
+            mapData_.forEach(function (element) {
                 task = element.task.split('：');
 
                 var googleNavigation = navigation(element.lat + ',' + element.lng, latlng.lat + ',' + latlng.lng);
