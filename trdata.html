@@ -2,9 +2,7 @@
 
 <body>
 
-    <h1>我的第一个标题</h1>
-
-    <p>我的第一个段落。</p>
+    <h1>json</h1>
 
     <input type='file' onchange='openFile(event)'>
     <br>
@@ -21,6 +19,8 @@
                 data = test(reader.result);
                 
                 output = data.join('\n');
+
+                console.log(output)
             };
             reader.readAsText(input.files[0]);
         };
@@ -170,7 +170,8 @@
                     poke_lat: poke_lat,
                     poke_lng: poke_lng,
                     poke_type: poke_type,
-                    poke_title: data[item].rfs21d
+                    poke_title: data[item].rfs21d.indexOf('"') ? '"' + data[item].rfs21d + '"' : "'" + data[item].rfs21d + "'",
+                    poke_id: item
                 }
             });
 
@@ -179,7 +180,7 @@
             });
 
             site_list = site_list.map(function (item) {
-                return item.poke_lat + ',' + item.poke_lng + ',' + item.poke_title
+                return item.poke_id + ',' + item.poke_lat + ',' + item.poke_lng + ',' + item.poke_title
             });
 
             return site_list
