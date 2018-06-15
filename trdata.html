@@ -9,7 +9,8 @@
 
     <script>
         var data = [];
-        var output = '';
+        var output = {};
+        var output_data = '';
 
         var openFile = function (event) {
             var input = event.target;
@@ -17,10 +18,20 @@
             var reader = new FileReader();
             reader.onload = function () {
                 data = test(reader.result);
-                
-                output = data.join('\n');
 
-                console.log(output)
+                // output = data.join('\n');
+                output = { ...output,
+                    ...data
+                };
+
+                output_data = Object.keys(output).map(function (item) {
+
+                    var od = [output[item].poke_id, output[item].poke_lat, output[item].poke_lng, output[item].poke_title]
+                    return od.join(',')
+
+                }).join('\n');
+
+                // console.log(data)
             };
             reader.readAsText(input.files[0]);
         };
@@ -148,6 +159,8 @@
 
             var data = JSON.parse(data);
 
+            var dd = {};
+
             var site_list = Object.keys(data).map(function (item) {
                 var jqueryscrollzoom = 1.852;
 
@@ -166,24 +179,32 @@
                     console.log(err)
                 }
 
-                return {
+                var info = {
                     poke_lat: poke_lat,
                     poke_lng: poke_lng,
                     poke_type: poke_type,
-                    poke_title: data[item].rfs21d.indexOf('"') ? '"' + data[item].rfs21d + '"' : "'" + data[item].rfs21d + "'",
+                    poke_title: data[item].rfs21d.indexOf('"') ? '"' + data[item].rfs21d + '"' : "'" + data[
+                        item].rfs21d + "'",
                     poke_id: item
                 }
+
+                if (info.poke_type == 1) {
+                    dd[item] = info
+                }
+
+                return info
             });
 
             site_list = site_list.filter(function (item) {
                 return item.poke_type == 1
             });
 
-            site_list = site_list.map(function (item) {
-                return item.poke_id + ',' + item.poke_lat + ',' + item.poke_lng + ',' + item.poke_title
-            });
+            // site_list = site_list.map(function (item) {
+            //     return item.poke_id + ',' + item.poke_lat + ',' + item.poke_lng + ',' + item.poke_title
+            // });
 
-            return site_list
+            // return site_list
+            return dd
 
         }
     </script>
