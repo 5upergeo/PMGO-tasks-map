@@ -2,7 +2,10 @@ body {
     padding: 0;
     margin: 0;
 }
-html, body, #map {
+
+html,
+body,
+#map {
     height: 100%;
     width: 100vw;
 }
@@ -25,11 +28,49 @@ html, body, #map {
     width: 214px;
 }
 
-.pokestops h3{
+.pokestops h3 {
     text-align: center;
     margin-bottom: 0;
 }
 
-.pokestops p{
+.pokestops p {
     margin-top: 0;
+}
+
+.leaflet-control-layers-selector {
+    display: none;
+}
+
+.leaflet-control-layers-selector:not(:checked)+span>img {
+    filter: contrast(0%);
+}
+
+.leaflet-control-layers-overlays>label {
+    display: inline-block;
+}
+
+.leaflet-control {
+    margin-right: 10px;
+    border: 0px !important;
+}
+
+/* .leaflet-control-layers-expanded{
+    max-width: 45VW;
+} */
+
+.controlIcon {
+    width: 40px;
+    cursor: pointer;
+}
+
+.leaflet-control-locate a{
+    font-size:1.4em;color:#444;cursor:pointer
+}
+
+.leaflet-control-locate.active a{
+    color:#2074B6
+}
+
+.leaflet-control-locate.active.following a{
+    color:#FC8428
 }

@@ -1,118 +1,197 @@
-(function (window) {
+(function (window, L) {
 
-    var url = 'https://script.google.com/macros/s/AKfycbyOkCaKC-q75jN8NPx4oxLvkcIyEJLDGZDKUuAZ_Rl9JufGr1Uf/exec';
+    const url = 'https://script.google.com/macros/s/AKfycbyOkCaKC-q75jN8NPx4oxLvkcIyEJLDGZDKUuAZ_Rl9JufGr1Uf/exec';
 
-    function getParameterByName(name, url) {
-        if (!url) url = window.location.href;
-        name = name.replace(/[\[\]]/g, "\\$&");
-        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-            results = regex.exec(url);
-        if (!results) return null;
-        if (!results[2]) return '';
-        return decodeURIComponent(results[2].replace(/\+/g, " "));
-    }
+    let position = getPosition();
+    let mapLatLng = position.latLng;
+    let mapZoom = position.zoom;
 
-    var map = L.map('map')
-        .setView([25.046266, 121.517406], 15);
-
-    L.tileLayer('https://mt{s}.google.com/vt/x={x}&y={y}&z={z}&hl=zh-TW', {
-        id: 'streets',
-        subdomains: "012",
-        // attribution: 'Map data: &copy; Google'
+    let map = L.map('map');
+    let task_icon = {};
+    let rewards = [];
+    let layer_group = {};
+    let layer_control = L.control.layers({}, {}, {
+        position: "bottomleft",
+        collapsed: false
     }).addTo(map);
+    
 
-    var latlng_qs = {
-        lat: Number(getParameterByName('lat')),
-        lng: Number(getParameterByName('lng'))
-    }
-
-    var latlng = "";
-
-    function onLocationFound(e) {
-        var radius = e.accuracy / 2;
-
-        // L.marker(e.latlng).addTo(map)
-        //     .bindPopup("You are within " + radius + " meters from this point").openPopup();
-        latlng = e.latlng;
-        L.circle(e.latlng, radius).addTo(map);
-    }
-
-    function onLocationError(e) {
-        alert(e.message);
-    }
-
-    // map.locate({
-    //     setView: true,
-    //     maxZoom: 16
-    // });
-
-    var task_icon = {};
-
-    //取得圖資
-    axios({
-        method: 'get',
-        url: url + '?method=get_tasks',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        }
-    }).then(function (response) {
-
-        var mapData = response.data;
-
-        mapData.forEach(function (item) {
-            task_icon[item] = L.icon({
-                iconUrl: './img/' + item + '_.png',
-
-                iconSize: [48, 48], // size of the icon
-                iconAnchor: [24, 24], // point of the icon which will correspond to marker's location
-                popupAnchor: [0, -18] // point from which the popup should open relative to the iconAnchor
-            });
-        });
-
-        //取得圖資
-        axios({
-            method: 'get',
-            url: url + '?method=get_existing_data',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }
-        }).then(function (r) {
-
-            var mapData_ = r.data;
-
-            mapData_.forEach(function (element) {
-                task = element.task.split('：');
-
-                var googleNavigation = navigation(element.lat + ',' + element.lng, latlng.lat + ',' + latlng.lng);
-
-                var show_msg = "<div class='pokestops'><h3>" + element.site_name + '</h3><hr><p><b>' + task[0] + '</b><br>✔️回報確認數：' + element['T&F'].T + '<br>❌回報錯誤數：' + element['T&F'].F + '</p><div class="crop"><img src="' + element.image + '"></div>' + '<br><a href=' + googleNavigation + ' target="_blank" style="font-size: 1.5em;">google\u5C0E\u822A</a>' + "</div>";
-
-                L.marker([element.lat, element.lng], {
-                        icon: task_icon[task[1]]
-                    })
-                    .addTo(map)
-                    .bindPopup(show_msg);
-            });
-
-
-            if (latlng_qs.lat && latlng_qs.lng) {
-                map.setView([latlng_qs.lat, latlng_qs.lng], 17);
-            } else {
-                map.locate({
-                    setView: true,
-                    maxZoom: 16
-                });
-
-                map.on('locationfound', onLocationFound);
-                map.on('locationerror', onLocationError);
-            }
-
-
-        });
-
+    let streets = L.tileLayer('https://mt{s}.google.com/vt/x={x}&y={y}&z={z}&hl=zh-TW', {
+        subdomains: "012",
+        maxZoom: 20,
+        attribution: 'Map data: &copy; Google',
+        fixed: true
     });
 
+    let locate = L.Control.extend({
 
+        options: {
+            position: 'topleft'
+        },
+
+        onAdd: function (map) {
+            let container = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
+
+            container.style.backgroundColor = 'white';
+            container.style.backgroundImage = "url(img/location.png)";
+            container.style.backgroundSize = "30px 30px";
+            container.style.width = '30px';
+            container.style.height = '30px';
+
+            container.onclick = function () {
+                locateMe()
+            }
+
+            return container;
+        }
+    });
+
+    let relaod = L.Control.extend({
+
+        options: {
+            position: 'topleft'
+        },
+
+        onAdd: function (map) {
+            let container = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
+
+            container.style.backgroundColor = 'white';
+            container.style.backgroundImage = "url(img/reload.png)";
+            container.style.backgroundSize = "30px 30px";
+            container.style.width = '30px';
+            container.style.height = '30px';
+
+            container.onclick = function () {
+                onLoad()
+            }
+
+            return container;
+        }
+    });
+
+    map.addLayer(streets)
+        .addControl(new locate())
+        .addControl(new relaod())
+        .on('load', onLoad)
+        .on('moveend', setPosition)
+        .on('locationfound', onLocationFound)
+        .setView(mapLatLng, mapZoom);
+
+
+    function onLoad() {
+        getData();
+        setPosition();
+    }
+
+    function getData() {
+
+        Promise.all([getTasks(), getExistingData()])
+            .then(d => {
+                let tasks = d[0];
+                getIcons(tasks);
+
+                // markers = [];
+                let reports = d[1];
+                reports.forEach(setRewards);
+
+                map.eachLayer(function (layer) {
+                    if (!layer.options.fixed) {
+                        map.removeLayer(layer);
+                    }
+                });
+
+                let overlayMaps = Object.keys(layer_group).reduce((all, reward) => {
+                    let layer = L.layerGroup(layer_group[reward], {
+                        fixed: false
+                    });
+                    map.addLayer(layer);
+                    all[`<img src="./img/${reward}_.png" class="controlIcon">`] = layer;
+                    return all
+                }, {});
+
+                map.removeControl(layer_control);
+
+                layer_control = L.control.layers({}, overlayMaps, {
+                    position: "bottomleft",
+                    collapsed: false
+                }).addTo(map);
+            });
+    }
+
+    // 產生圖示物件
+    function getIcons(tasks) {
+        tasks.forEach((task) => {
+            task_icon[task] = L.icon({
+                iconUrl: `./img/${task}_.png`,
+                iconSize: [48, 48],
+                iconAnchor: [24, 24],
+                popupAnchor: [0, -18]
+            });
+
+            layer_group[task] = [];
+        });
+    }
+
+    // 產製點位
+    function setRewards(reward) {
+        let task = reward.task.split('：');
+
+        var googleNavigation = navigation(`${reward.lat},${reward.lng}`, `25.046266,121.517406`);
+
+        var show_msg = `
+            <div class='pokestops'>
+                <h3>${reward.site_name}</h3>
+                <hr>
+                <p><b>${task[0]}</b><br>
+                ✔️回報確認數：${reward['T&F'].T}<br>
+                ❌回報錯誤數：${reward['T&F'].F}</p>
+                <div class="crop">
+                    <img src="${reward.image}">
+                </div>
+                <br>
+                <a href=${googleNavigation} target="_blank" style="font-size: 1.5em;">🚘google導航</a>
+            </div>
+        `
+
+        layer_group[task[1]].push(
+            L.marker([reward.lat, reward.lng], {
+                icon: task_icon[task[1]]
+            }).bindPopup(show_msg)
+        )
+
+    }
+
+    function locateMe() {
+        map.locate({
+            setView: true,
+            watch: true,
+            maxZoom: 16
+        });
+
+        window.red = L.marker(mapLatLng, {
+            icon: L.icon({
+                iconUrl: './img/pikachu.gif',
+                iconSize: [30, 48],
+                iconAnchor: [15, 24]
+            }),
+            fixed: true
+        }).addTo(map);
+    }
+
+    // 取得任務總類清單
+    function getTasks() {
+        return fetch(`${url}?method=get_tasks`).then(d => d.json());
+    };
+
+    // 取得任務清單
+    function getExistingData() {
+        return fetch(`${url}?method=get_existing_data`).then(d => d.json());
+    }
+
+    // 
+    function onLocationFound(e) {
+        window.red.setLatLng(e.latlng);
+    }
 
     //導航連結
     function navigation(LngLat, GPSLocation) {
@@ -130,4 +209,38 @@
         return "";
     }
 
-})(window)
+    function getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
+
+    function getPosition() {
+
+        const lat = Number(getParameterByName('lat')) || localStorage.getItem('lat') || 25.046266;
+        const lng = Number(getParameterByName('lng')) || localStorage.getItem('lng') || 121.517406;
+        const zoom = localStorage.getItem('zoom') || 15;
+
+        return {
+            latLng: [+lat, +lng],
+            zoom: +zoom,
+        };
+    };
+
+    function setPosition() {
+        if (!map) { return; }
+    
+        let geo = map.getCenter();
+        let [lat, lng] = [geo.lat, geo.lng];
+    
+        localStorage.setItem('lat', lat);
+        localStorage.setItem('lng', lng);
+        localStorage.setItem('zoom', map.getZoom());
+      };
+
+
+})(window, L)
