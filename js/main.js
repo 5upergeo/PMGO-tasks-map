@@ -8,12 +8,14 @@
 
     let map = L.map('map');
     let task_icon = {};
-    let rewards = [];
     let layer_group = {};
     let layer_control = L.control.layers({}, {}, {
         position: "bottomleft",
         collapsed: false
     }).addTo(map);
+
+    let locate_status = false;
+    let locate_control;
     
 
     let streets = L.tileLayer('https://mt{s}.google.com/vt/x={x}&y={y}&z={z}&hl=zh-TW', {
@@ -30,19 +32,26 @@
         },
 
         onAdd: function (map) {
-            let container = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
+            locate_control = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
+            
 
-            container.style.backgroundColor = 'white';
-            container.style.backgroundImage = "url(img/location.png)";
-            container.style.backgroundSize = "30px 30px";
-            container.style.width = '30px';
-            container.style.height = '30px';
+            locate_control.style.backgroundColor = 'white';
+            locate_control.style.backgroundImage = "url(img/location.png)";
+            locate_control.style.backgroundSize = "30px 30px";
+            locate_control.style.width = '30px';
+            locate_control.style.height = '30px';
 
-            container.onclick = function () {
-                locateMe()
+            locate_control.onclick = function () {
+                this.classList.toggle("leaflet-control-locate");
+                if (!locate_status){
+                    locateMe();
+                }else{
+                    stopLocateMe();
+                }
+                
             }
 
-            return container;
+            return locate_control;
         }
     });
 
@@ -77,12 +86,13 @@
         .on('locationfound', onLocationFound)
         .setView(mapLatLng, mapZoom);
 
-
+    // 地圖建立時執行
     function onLoad() {
         getData();
         setPosition();
     }
 
+    // 抓取資料
     function getData() {
 
         Promise.all([getTasks(), getExistingData()])
@@ -161,7 +171,11 @@
 
     }
 
+    // 開始定位
     function locateMe() {
+
+        locate_status = true;
+
         map.locate({
             setView: true,
             watch: true,
@@ -176,6 +190,16 @@
             }),
             fixed: true
         }).addTo(map);
+
+        window.red._icon.style.display = 'block';
+    }
+
+    // 取消訂位
+    function stopLocateMe() {
+        locate_status = false;
+        map.stopLocate();
+
+        window.red._icon.style.display = 'none';
     }
 
     // 取得任務總類清單
@@ -188,7 +212,7 @@
         return fetch(`${url}?method=get_existing_data`).then(d => d.json());
     }
 
-    // 
+    // 監聽GPS訊號
     function onLocationFound(e) {
         window.red.setLatLng(e.latlng);
     }
@@ -209,6 +233,7 @@
         return "";
     }
 
+    // 取得querystring參數
     function getParameterByName(name, url) {
         if (!url) url = window.location.href;
         name = name.replace(/[\[\]]/g, "\\$&");
@@ -219,6 +244,7 @@
         return decodeURIComponent(results[2].replace(/\+/g, " "));
     }
 
+    // 取得座標(querystring -> localStorage -> 北車)
     function getPosition() {
 
         const lat = Number(getParameterByName('lat')) || localStorage.getItem('lat') || 25.046266;
@@ -231,6 +257,7 @@
         };
     };
 
+    // 儲存當下座標至localStorag
     function setPosition() {
         if (!map) { return; }
     
