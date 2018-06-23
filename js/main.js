@@ -96,7 +96,7 @@
     function getData() {
 
         Promise.all([getTasks(), getExistingData()])
-            .then(d => {
+            .then((d) => {
                 let tasks = d[0];
                 getIcons(tasks);
 
@@ -247,9 +247,15 @@
     // 取得座標(querystring -> localStorage -> 北車)
     function getPosition() {
 
-        const lat = Number(getParameterByName('lat')) || localStorage.getItem('lat') || 25.046266;
-        const lng = Number(getParameterByName('lng')) || localStorage.getItem('lng') || 121.517406;
-        const zoom = localStorage.getItem('zoom') || 15;
+        const urlParams = new URLSearchParams(location.search);
+
+        const lat = urlParams.get('lat') || localStorage.getItem('lat') || 25.046266;
+        const lng = urlParams.get('lng') || localStorage.getItem('lng') || 121.517406;
+        const zoom = urlParams.get('zoom') || localStorage.getItem('zoom') || 15;
+
+        // const lat = Number(getParameterByName('lat')) || localStorage.getItem('lat') || 25.046266;
+        // const lng = Number(getParameterByName('lng')) || localStorage.getItem('lng') || 121.517406;
+        // const zoom = localStorage.getItem('zoom') || 15;
 
         return {
             latLng: [+lat, +lng],
