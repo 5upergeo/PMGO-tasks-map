@@ -152,13 +152,11 @@
             <div class='pokestops'>
                 <h3>${reward.site_name}</h3>
                 <hr>
-                <p><b>${task[0]}</b><br>
-                ✔️回報確認數：${reward['T&F'].T}<br>
-                ❌回報錯誤數：${reward['T&F'].F}</p>
+                <b>${task[0]}</b><br>✔️：${reward['T&F'].T}, ❌：${reward['T&F'].F}
                 <div class="crop">
-                    <img src="${reward.image}">
+                    <img src="http://images.weserv.nl/?url=${reward.image.replace(/^https?\:\/\//g, '')}&w=70&h=70&il&trim=10&t=squaredown">
                 </div>
-                <br>
+                
                 <a href=${googleNavigation} target="_blank" style="font-size: 1.5em;">🚘google導航</a>
             </div>
         `
@@ -234,15 +232,15 @@
     }
 
     // 取得querystring參數
-    function getParameterByName(name, url) {
-        if (!url) url = window.location.href;
-        name = name.replace(/[\[\]]/g, "\\$&");
-        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-            results = regex.exec(url);
-        if (!results) return null;
-        if (!results[2]) return '';
-        return decodeURIComponent(results[2].replace(/\+/g, " "));
-    }
+    // function getParameterByName(name, url) {
+    //     if (!url) url = window.location.href;
+    //     name = name.replace(/[\[\]]/g, "\\$&");
+    //     var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+    //         results = regex.exec(url);
+    //     if (!results) return null;
+    //     if (!results[2]) return '';
+    //     return decodeURIComponent(results[2].replace(/\+/g, " "));
+    // }
 
     // 取得座標(querystring -> localStorage -> 北車)
     function getPosition() {
@@ -252,10 +250,6 @@
         const lat = urlParams.get('lat') || localStorage.getItem('lat') || 25.046266;
         const lng = urlParams.get('lng') || localStorage.getItem('lng') || 121.517406;
         const zoom = urlParams.get('zoom') || localStorage.getItem('zoom') || 15;
-
-        // const lat = Number(getParameterByName('lat')) || localStorage.getItem('lat') || 25.046266;
-        // const lng = Number(getParameterByName('lng')) || localStorage.getItem('lng') || 121.517406;
-        // const zoom = localStorage.getItem('zoom') || 15;
 
         return {
             latLng: [+lat, +lng],

@@ -15,8 +15,8 @@ body,
 }
 
 .crop img {
-    height: 200px;
-    width: 200px;
+    height: 150px;
+    width: 150px;
     border-radius: 50%;
     object-fit: cover;
     border: #ca90c5 7px solid;
@@ -25,7 +25,7 @@ body,
 .pokestops {
     text-align: center;
     margin-bottom: 0.5em;
-    width: 214px;
+    width: 164px;
 }
 
 .pokestops h3 {
