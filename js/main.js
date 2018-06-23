@@ -16,7 +16,7 @@
 
     let locate_status = false;
     let locate_control;
-    
+
 
     let streets = L.tileLayer('https://mt{s}.google.com/vt/x={x}&y={y}&z={z}&hl=zh-TW', {
         subdomains: "012",
@@ -33,7 +33,7 @@
 
         onAdd: function (map) {
             locate_control = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
-            
+
 
             locate_control.style.backgroundColor = 'white';
             locate_control.style.backgroundImage = "url(img/location.png)";
@@ -43,12 +43,12 @@
 
             locate_control.onclick = function () {
                 this.classList.toggle("leaflet-control-locate");
-                if (!locate_status){
+                if (!locate_status) {
                     locateMe();
-                }else{
+                } else {
                     stopLocateMe();
                 }
-                
+
             }
 
             return locate_control;
@@ -147,6 +147,17 @@
         let task = reward.task.split('：');
 
         var googleNavigation = navigation(`${reward.lat},${reward.lng}`, `25.046266,121.517406`);
+        
+        const img = "http://2.bp.blogspot.com/-tsIDMPhBx18/VPGxHZtjsnI/AAAAAAAALIU/1b_VO721HDw/s1600/line-share-button.png"; // line 按鈕圖示
+        const url = `https://5upergeo.github.io/PMGO-tasks-map/?lat=${reward.lat}&lng={reward.lng}`
+
+        // 行動裝置語法
+        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+            href = "http://line.naver.jp/R/msg/text/?" + task[0] + "%0D%0A" + url;
+        } else {
+            // 網頁版語法
+            href = "https://lineit.line.me/share/ui?url=" + encodeURIComponent(url);
+        }
 
         var show_msg = `
             <div class='pokestops'>
@@ -156,8 +167,8 @@
                 <div class="crop">
                     <img src="http://images.weserv.nl/?url=${reward.image.replace(/^https?\:\/\//g, '')}&w=70&h=70&il&trim=10&t=squaredown">
                 </div>
-                
-                <a href=${googleNavigation} target="_blank" style="font-size: 1.5em;">🚘google導航</a>
+                <a href=${googleNavigation} target="_blank" style="font-size: 1.5em;">🚘google導航</a><br>
+                <a href=${href} target='_blank'><img src=${img}></a>
             </div>
         `
 
@@ -259,15 +270,17 @@
 
     // 儲存當下座標至localStorag
     function setPosition() {
-        if (!map) { return; }
-    
+        if (!map) {
+            return;
+        }
+
         let geo = map.getCenter();
         let [lat, lng] = [geo.lat, geo.lng];
-    
+
         localStorage.setItem('lat', lat);
         localStorage.setItem('lng', lng);
         localStorage.setItem('zoom', map.getZoom());
-      };
+    };
 
 
 })(window, L)
