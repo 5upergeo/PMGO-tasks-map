@@ -148,8 +148,8 @@
 
         var googleNavigation = navigation(`${reward.lat},${reward.lng}`, `25.046266,121.517406`);
         
-        const img = "http://2.bp.blogspot.com/-tsIDMPhBx18/VPGxHZtjsnI/AAAAAAAALIU/1b_VO721HDw/s1600/line-share-button.png"; // line 按鈕圖示
-        const url = `https://5upergeo.github.io/PMGO-tasks-map/?lat=${reward.lat}&lng={reward.lng}`
+        const img = "https://media.line.me/img/web/zh_TW/lineit_select_line_icon_01.png"; // line 按鈕圖示
+        const url = `https://5upergeo.github.io/PMGO-tasks-map/?lat=${reward.lat}&lng=${reward.lng}`
 
         // 行動裝置語法
         if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
