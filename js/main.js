@@ -151,9 +151,17 @@
         const img = "https://media.line.me/img/web/zh_TW/lineit_select_line_icon_01.png"; // line 按鈕圖示
         const url = `https://5upergeo.github.io/PMGO-tasks-map/?lat=${reward.lat}&lng=${reward.lng}`
 
+        const line_text = `
+        ${new Date().toLocaleDateString()}
+        ${reward.site_name}
+        ${reward.task}
+        ${reward.address}
+        https://www.google.com.tw/maps/place/${reward.lat},${reward.lng}
+        `
+
         // 行動裝置語法
         if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-            href = "http://line.naver.jp/R/msg/text/?" + reward.task + "%0D%0A" + url;
+            href = "http://line.naver.jp/R/msg/text/?" + line_text + "%0D%0A" + url;
         } else {
             // 網頁版語法
             href = "https://lineit.line.me/share/ui?url=" + encodeURIComponent(url);
