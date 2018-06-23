@@ -153,7 +153,7 @@
 
         // 行動裝置語法
         if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-            href = "http://line.naver.jp/R/msg/text/?" + task[0] + "%0D%0A" + url;
+            href = "http://line.naver.jp/R/msg/text/?" + reward.task + "%0D%0A" + url;
         } else {
             // 網頁版語法
             href = "https://lineit.line.me/share/ui?url=" + encodeURIComponent(url);
