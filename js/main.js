@@ -173,7 +173,7 @@
             L.marker([reward.lat, reward.lng], {
                 // icon: task_icon[task[1]]
                 icon: L.divIcon({
-                    className: (reward['T&F'].F - reward['T&F'].T) > 1 ? "map-marker-fake map-marker" : "map-marker",
+                    className: (reward['T&F'].F - reward['T&F'].T) >= 1 ? "map-marker-fake map-marker" : "map-marker",
                     iconSize: [48, 48],
                     iconAnchor: [24, 24],
                     popupAnchor: [0, -18],
