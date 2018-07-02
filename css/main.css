@@ -64,7 +64,7 @@ body,
 }
 
 .leaflet-control-locate {
-    -webkit-filter: invert(1); /* Safari */
+    -webkit-filter: invert(1);
     filter: invert(1);
 }
 
@@ -73,9 +73,27 @@ body,
     height: 100%;
 }
 
-.map-marker-fake > div::after{
+.map-marker-fake>div::after {
     content: url('../img/question-mark.png');
     top: 12px;
     left: 12px;
     position: fixed;
+}
+
+@media only screen and (max-width: 768px) {
+    .leaflet-control-custom {
+        height: 48px !important;
+        width: 48px !important;
+        border-radius: 50%;
+        background-repeat: no-repeat !important;
+        background-size: 100% !important;
+    }
+
+    .leaflet-control-zoom {
+        display: none;
+    }
+
+    .controlIcon {
+        width: 30px;
+    }
 }

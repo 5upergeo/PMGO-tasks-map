@@ -6,7 +6,7 @@
     let mapLatLng = position.latLng;
     let mapZoom = position.zoom;
 
-    let map = L.map('map');
+    let map = L.map('map', {attributionControl: false});
     let task_icon = {};
     let layer_group = {};
     let layer_control = L.control.layers({}, {}, {
@@ -34,9 +34,8 @@
         onAdd: function (map) {
             locate_control = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
 
-
             locate_control.style.backgroundColor = 'white';
-            locate_control.style.backgroundImage = "url(img/location.png)";
+            locate_control.style.backgroundImage = "url(img/location_64.png)";
             locate_control.style.backgroundSize = "30px 30px";
             locate_control.style.width = '30px';
             locate_control.style.height = '30px';
@@ -65,7 +64,7 @@
             let container = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
 
             container.style.backgroundColor = 'white';
-            container.style.backgroundImage = "url(img/reload.png)";
+            container.style.backgroundImage = "url(img/reload_64.png)";
             container.style.backgroundSize = "30px 30px";
             container.style.width = '30px';
             container.style.height = '30px';
