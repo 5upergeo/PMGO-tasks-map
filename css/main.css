@@ -1,6 +1,7 @@
 body {
     padding: 0;
     margin: 0;
+    font-family: Microsoft JhengHei, Heiti TC, LiHei Pro, Droid Sans;
 }
 
 html,
@@ -54,6 +55,10 @@ body,
     border: 0px !important;
 }
 
+.pointer {
+    cursor: pointer;
+}
+
 /* .leaflet-control-layers-expanded{
     max-width: 45VW;
 } */
@@ -63,7 +68,36 @@ body,
     cursor: pointer;
 }
 
-.leaflet-control-locate {
+.info {
+    position: fixed;
+    top: 15%;
+    right: 50%;
+    width: 200px;
+    left: 50%;
+    margin-left: -100px;
+    border-radius: 12px;
+    background-color: white;
+    z-index: 99999;
+}
+
+.hide {
+    display: none;
+}
+
+.info img {
+    max-width: 150px;
+    margin: 0 auto;
+    display: block;
+}
+
+.info a, .info h3{
+    position:relative;
+    margin: 10px auto;
+    text-align:center;
+    display: block;
+}
+
+.use {
     -webkit-filter: invert(1);
     filter: invert(1);
 }
@@ -82,11 +116,12 @@ body,
 
 @media only screen and (max-width: 768px) {
     .leaflet-control-custom {
-        height: 48px !important;
-        width: 48px !important;
+        height: 40px !important;
+        width: 40px !important;
         border-radius: 50%;
         background-repeat: no-repeat !important;
         background-size: 100% !important;
+        box-shadow: 2px 2px 3px 3px #aaa !important;
     }
 
     .leaflet-control-zoom {

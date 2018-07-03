@@ -25,6 +25,7 @@
         fixed: true
     });
 
+    // 定位
     let locate = L.Control.extend({
 
         options: {
@@ -32,7 +33,7 @@
         },
 
         onAdd: function (map) {
-            locate_control = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
+            locate_control = L.DomUtil.create('div', 'pointer leaflet-bar leaflet-control leaflet-control-custom');
 
             locate_control.style.backgroundColor = 'white';
             locate_control.style.backgroundImage = "url(img/location_64.png)";
@@ -41,19 +42,19 @@
             locate_control.style.height = '30px';
 
             locate_control.onclick = function () {
-                this.classList.toggle("leaflet-control-locate");
+                this.classList.toggle("use");
                 if (!locate_status) {
                     locateMe();
                 } else {
                     stopLocateMe();
                 }
-
             }
 
             return locate_control;
         }
     });
 
+    // 重新讀取數據
     let relaod = L.Control.extend({
 
         options: {
@@ -61,7 +62,7 @@
         },
 
         onAdd: function (map) {
-            let container = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
+            let container = L.DomUtil.create('div', 'pointer leaflet-bar leaflet-control leaflet-control-custom');
 
             container.style.backgroundColor = 'white';
             container.style.backgroundImage = "url(img/reload_64.png)";
@@ -70,16 +71,42 @@
             container.style.height = '30px';
 
             container.onclick = function () {
-                onLoad()
+                onLoad();
             }
 
             return container;
         }
     });
 
+    // 回報
+    let return_task = L.Control.extend({
+
+        options: {
+            position: 'topleft'
+        },
+
+        onAdd: function (map) {
+            return_task_control = L.DomUtil.create('div', 'pointer leaflet-bar leaflet-control leaflet-control-custom');
+
+            return_task_control.style.backgroundColor = 'white';
+            return_task_control.style.backgroundImage = "url(img/info_64.png)";
+            return_task_control.style.backgroundSize = "30px 30px";
+            return_task_control.style.width = '30px';
+            return_task_control.style.height = '30px';
+
+            return_task_control.onclick = function () {
+                this.classList.toggle("use");
+                document.getElementsByClassName('info')[0].classList.toggle("hide");
+            }
+
+            return return_task_control;
+        }
+    });
+
     map.addLayer(streets)
         .addControl(new locate())
         .addControl(new relaod())
+        .addControl(new return_task())
         .on('load', onLoad)
         .on('moveend', setPosition)
         .on('locationfound', onLocationFound)
