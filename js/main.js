@@ -218,8 +218,7 @@
         map.locate({
             setView: true,
             watch: true,
-            maxZoom: 20,
-            enableHighAccuracy: true
+            maxZoom: 20
         });
 
         window.red = L.marker(mapLatLng, {
