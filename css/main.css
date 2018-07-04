@@ -12,7 +12,7 @@ body,
 }
 
 .leaflet-tile-container.leaflet-zoom-animated {
-    filter: opacity(0.7);
+    filter: opacity(0.8);
 }
 
 .crop img {
@@ -76,7 +76,8 @@ body,
     left: 50%;
     margin-left: -100px;
     border-radius: 12px;
-    /* background-color: white; */
+    background-color: rgb(255,255,255,0.4);
+    padding-bottom: 1em;
     z-index: 99999;
 }
 
@@ -121,7 +122,7 @@ body,
         border-radius: 50%;
         background-repeat: no-repeat !important;
         background-size: 100% !important;
-        box-shadow: 2px 2px 3px 3px #aaa !important;
+        box-shadow: -3px 0px 4px 1px #aaa !important
     }
 
     .leaflet-control-zoom {
@@ -131,4 +132,8 @@ body,
     .controlIcon {
         width: 30px;
     }
+
+    /* .info {
+        background-color: inherit;
+    } */
 }
