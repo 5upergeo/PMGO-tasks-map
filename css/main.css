@@ -20,7 +20,7 @@ body,
     width: 150px;
     border-radius: 50%;
     object-fit: cover;
-    border: #ca90c5 7px solid;
+    border: #3cc3fb 7px solid;
 }
 
 .pokestops {
@@ -122,7 +122,7 @@ body,
         border-radius: 50%;
         background-repeat: no-repeat !important;
         background-size: 100% !important;
-        box-shadow: -3px 0px 4px 1px #aaa !important
+        box-shadow: -2px 0px 3px 0px #ccc !important;
     }
 
     .leaflet-control-zoom {
