@@ -219,7 +219,7 @@
     function setTasks(tasks) {
         let select_tasks = document.getElementById('tasks');
 
-        const results = tasks
+        const results = '<option value="請選擇任務">請選擇任務</option>' + tasks
             .map(task => `<option value="${task}">${task}</option>`)
             .join('');
         select_tasks.innerHTML = results;
@@ -229,7 +229,7 @@
     function setPokestops(pokestops) {
         let pokestops_nearby = document.getElementById('pokestops_nearby');
 
-        const results = pokestops
+        const results = '<option value="請選擇補給站">請選擇補給站</option>' + pokestops
             .map(pokestop => `
             <option value="${pokestop.poke_title}＠${pokestop.poke_lat}＠${pokestop.poke_lng}＠${pokestop.poke_image}">
                 ${pokestop.poke_title}
