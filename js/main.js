@@ -272,7 +272,7 @@
                 <hr>
                 <b>${task[0]}</b><br>✔️：${reward['T&F'].T}, ❌：${reward['T&F'].F}
                 <div class="crop">
-                    <img src="http://images.weserv.nl/?url=${reward.image.replace(/^https?\:\/\//g, '')}&w=70&h=70&il&trim=10&t=squaredown">
+                    <img src="https://images.weserv.nl/?url=${reward.image.replace(/^https?\:\/\//g, '')}&w=70&h=70&il&trim=10&t=squaredown">
                 </div>
                 <a href=${googleNavigation} target="_blank" style="font-size: 1.5em;">🚘google導航</a><br>
                 <a href=${href} target='_blank'><img src=${img}></a>
