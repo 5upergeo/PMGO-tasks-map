@@ -68,7 +68,7 @@ body,
     cursor: pointer;
 }
 
-.info {
+.info, .select_task{
     position: fixed;
     top: 10%;
     right: 50%;
@@ -91,17 +91,19 @@ body,
     display: block;
 }
 
-.info a, .info h3{
+.info a, .info h3, .select_task *{
     position:relative;
     margin: 10px auto;
     text-align:center;
     display: block;
+    max-width: 150px;
 }
 
 .use {
     -webkit-filter: invert(1);
     filter: invert(1);
 }
+
 
 .map-marker img {
     width: 100%;
@@ -113,6 +115,14 @@ body,
     top: 12px;
     left: 12px;
     position: fixed;
+}
+
+.centerMarker {
+    position: absolute;
+    font-size: 32px;
+    top: calc( 50% - 24px );
+    right: calc( 50% - 16px );
+    z-index: 9999;
 }
 
 @media only screen and (max-width: 768px) {

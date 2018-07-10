@@ -32,7 +32,17 @@
 
 <body>
 
-    <div id='map'></div>
+    <div id='map'>
+        <div class="centerMarker">＋</div>
+    </div>
+    <div class="select_task hide">
+        <h3>補給站名稱：</h3>
+        <select name="pokestops_nearby" id="pokestops_nearby"></select>
+        <h3>任務名稱：</h3>
+        <select name="tasks" id="tasks">
+        </select>
+        <button id="return_task">新增</button>
+    </div>
     <div class='info hide'>
         <h3>LINE回報說明</h3>
         <p>
@@ -45,8 +55,6 @@
                 <li>無誤點選[沒問題!!]</li>
             </ol>
         </p>
-
-
         <a href="https://line.me/R/ti/p/%40wbf4859b">
             <img height="36" border="0" alt="加入好友" src="https://scdn.line-apps.com/n/line_add_friends/btn/zh-Hant.png">
         </a>

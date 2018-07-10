@@ -6,7 +6,9 @@
     let mapLatLng = position.latLng;
     let mapZoom = position.zoom;
 
-    let map = L.map('map', {attributionControl: false});
+    let map = L.map('map', {
+        attributionControl: false
+    });
     let task_icon = {};
     let layer_group = {};
     let layer_control = L.control.layers({}, {}, {
@@ -15,8 +17,6 @@
     }).addTo(map);
 
     let locate_status = false;
-    let locate_control;
-
 
     let streets = L.tileLayer('https://mt{s}.google.com/vt/x={x}&y={y}&z={z}&hl=zh-TW', {
         subdomains: "012",
@@ -26,22 +26,22 @@
     });
 
     // 定位
-    let locate = L.Control.extend({
+    let locate_control = L.Control.extend({
 
         options: {
             position: 'topleft'
         },
 
         onAdd: function (map) {
-            locate_control = L.DomUtil.create('div', 'pointer leaflet-bar leaflet-control leaflet-control-custom');
+            control = L.DomUtil.create('div', 'pointer leaflet-bar leaflet-control leaflet-control-custom');
 
-            locate_control.style.backgroundColor = 'white';
-            locate_control.style.backgroundImage = "url(img/location_64.png)";
-            locate_control.style.backgroundSize = "30px 30px";
-            locate_control.style.width = '30px';
-            locate_control.style.height = '30px';
+            control.style.backgroundColor = 'white';
+            control.style.backgroundImage = "url(img/location_64.png)";
+            control.style.backgroundSize = "30px 30px";
+            control.style.width = '30px';
+            control.style.height = '30px';
 
-            locate_control.onclick = function () {
+            control.onclick = function () {
                 this.classList.toggle("use");
                 if (!locate_status) {
                     locateMe();
@@ -50,12 +50,12 @@
                 }
             }
 
-            return locate_control;
+            return control;
         }
     });
 
     // 重新讀取數據
-    let relaod = L.Control.extend({
+    let relaod_control = L.Control.extend({
 
         options: {
             position: 'topleft'
@@ -78,35 +78,71 @@
         }
     });
 
-    // 回報
-    let return_task = L.Control.extend({
+    // 回報任務
+    let return_task_control = L.Control.extend({
 
         options: {
             position: 'topleft'
         },
 
         onAdd: function (map) {
-            return_task_control = L.DomUtil.create('div', 'pointer leaflet-bar leaflet-control leaflet-control-custom');
+            control = L.DomUtil.create('div', 'pointer leaflet-bar leaflet-control leaflet-control-custom return_task');
 
-            return_task_control.style.backgroundColor = 'white';
-            return_task_control.style.backgroundImage = "url(img/info_64.png)";
-            return_task_control.style.backgroundSize = "30px 30px";
-            return_task_control.style.width = '30px';
-            return_task_control.style.height = '30px';
+            control.style.backgroundColor = 'white';
+            control.style.backgroundImage = "url(img/add_64.png)";
+            control.style.backgroundSize = "30px 30px";
+            control.style.width = '30px';
+            control.style.height = '30px';
 
-            return_task_control.onclick = function () {
+            control.onclick = function () {
+                let conter = map.getCenter();
+                // http://127.0.0.1:5000/
+                // https://pokestop-taiwan-2.herokuapp.com/
+                const url = `https://pokestop-taiwan-2.herokuapp.com/get_bbox_sites/${conter.lat}/${conter.lng}`
+                fetch(url)
+                    .then(d => d.json())
+                    .then(
+                        d => setPokestops(d)
+                    );
+
+                this.classList.toggle("use");
+                document.getElementsByClassName('select_task')[0].classList.toggle("hide");
+            }
+
+            return control;
+        }
+    });
+
+    // 回報說明
+    let return_task_info = L.Control.extend({
+
+        options: {
+            position: 'topleft'
+        },
+
+        onAdd: function (map) {
+            control = L.DomUtil.create('div', 'pointer leaflet-bar leaflet-control leaflet-control-custom');
+
+            control.style.backgroundColor = 'white';
+            control.style.backgroundImage = "url(img/info_64.png)";
+            control.style.backgroundSize = "30px 30px";
+            control.style.width = '30px';
+            control.style.height = '30px';
+
+            control.onclick = function () {
                 this.classList.toggle("use");
                 document.getElementsByClassName('info')[0].classList.toggle("hide");
             }
 
-            return return_task_control;
+            return control;
         }
     });
 
     map.addLayer(streets)
-        .addControl(new locate())
-        .addControl(new relaod())
-        .addControl(new return_task())
+        .addControl(new locate_control())
+        .addControl(new relaod_control())
+        .addControl(new return_task_control())
+        .addControl(new return_task_info())
         .on('load', onLoad)
         .on('moveend', setPosition)
         .on('locationfound', onLocationFound)
@@ -118,13 +154,40 @@
         setPosition();
     }
 
+    function return_task() {
+
+        let pokestop_info = document.getElementById('pokestops_nearby').value.split('＠');
+        let task = document.getElementById('tasks').value;
+
+        fetch(url, {
+                method: "POST",
+                body: `pokestop=${encodeURIComponent(pokestop_info[0])}&lat=${encodeURIComponent(pokestop_info[1])}&lng=${encodeURIComponent(pokestop_info[2])}&image=${encodeURIComponent(pokestop_info[3])}&task=${encodeURIComponent(task)}`,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            })
+            .then(d => d.json())
+            .then(d => {
+                if (d.success){
+                    onLoad();
+                } else {
+                    document.getElementsByClassName('return_task')[0].classList.toggle("use");
+                    document.getElementsByClassName('select_task')[0].classList.toggle("hide");
+                }
+                console.log(d);
+            });
+    }
+
+    document.getElementById('return_task').onclick = return_task;
+
     // 抓取資料
     function getData() {
 
-        Promise.all([getTasks(), getExistingData()])
+        Promise.all([getTasks(), getExistingData(), getTasksFull()])
             .then((d) => {
                 let tasks = d[0];
                 getIcons(tasks);
+                setTasks(d[2]);
 
                 // markers = [];
                 let reports = d[1];
@@ -154,6 +217,29 @@
             });
     }
 
+    // 產製任務回報
+    function setTasks(tasks) {
+        let select_tasks = document.getElementById('tasks');
+
+        const results = tasks
+            .map(task => `<option value="${task}">${task}</option>`)
+            .join('');
+        select_tasks.innerHTML = results;
+    }
+
+    // 產製附近站點
+    function setPokestops(pokestops) {
+        let pokestops_nearby = document.getElementById('pokestops_nearby');
+
+        const results = pokestops
+            .map(pokestop => `
+            <option value="${pokestop.poke_title}＠${pokestop.poke_lat}＠${pokestop.poke_lng}＠${pokestop.poke_image}">
+                ${pokestop.poke_title}
+            </option>`)
+            .join('');
+        pokestops_nearby.innerHTML = results;
+    }
+
     // 產生圖示物件
     function getIcons(tasks) {
         tasks.forEach((task) => {
@@ -173,7 +259,7 @@
         let task = reward.task.split('：');
 
         var googleNavigation = navigation(`${reward.lat},${reward.lng}`, `25.046266,121.517406`);
-        
+
         const img = "https://media.line.me/img/web/zh_TW/lineit_select_line_icon_01.png"; // line 按鈕圖示
         const url = `https://5upergeo.github.io/PMGO-tasks-map/?lat=${reward.lat}&lng=${reward.lng}`
 
@@ -244,6 +330,11 @@
     // 取得任務總類清單
     function getTasks() {
         return fetch(`${url}?method=get_tasks`).then(d => d.json());
+    };
+
+    // 取得任務總類清單
+    function getTasksFull() {
+        return fetch(`${url}?method=get_tasks_full`).then(d => d.json());
     };
 
     // 取得任務清單
