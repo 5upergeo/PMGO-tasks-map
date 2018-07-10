@@ -170,11 +170,9 @@
             .then(d => {
                 if (d.success){
                     onLoad();
-                } else {
-                    document.getElementsByClassName('return_task')[0].classList.toggle("use");
-                    document.getElementsByClassName('select_task')[0].classList.toggle("hide");
                 }
-                console.log(d);
+                document.getElementsByClassName('return_task')[0].classList.toggle("use");
+                document.getElementsByClassName('select_task')[0].classList.toggle("hide");
             });
     }
 
