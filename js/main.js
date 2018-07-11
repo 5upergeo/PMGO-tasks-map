@@ -141,7 +141,7 @@
     map.addLayer(streets)
         .addControl(new locate_control())
         .addControl(new relaod_control())
-        .addControl(new return_task_control())
+        // .addControl(new return_task_control())
         .addControl(new return_task_info())
         .on('load', onLoad)
         .on('moveend', setPosition)
