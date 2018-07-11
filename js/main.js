@@ -181,11 +181,12 @@
     // 抓取資料
     function getData() {
 
-        Promise.all([getTasks(), getExistingData(), getTasksFull()])
+        Promise.all([getTasks(), getExistingData()])
             .then((d) => {
                 let tasks = d[0];
                 getIcons(tasks);
-                setTasks(d[2]);
+                // setTasks(d[2]);
+                // , getTasksFull()
 
                 // markers = [];
                 let reports = d[1];
