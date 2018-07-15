@@ -277,13 +277,14 @@
                 </div>
                 <a href=${googleNavigation} target="_blank">🚘google導航</a><br>
                 <a href=${href} target='_blank' class="line_share"><img src=${img}></a>
-                <a href="#" class="web_share" onclick='copy_text()'>複製分享文字</a>
+                <a href="#" class="web_share" onclick="copy_text(this)" data-share_text = '${share_text}'>複製分享文字</a>
             </div>
         `
 
-        window.copy_text = function(){
+        window.copy_text = function(e){
+
             var clip_area = document.createElement('textarea');
-            clip_area.textContent = share_text;
+            clip_area.textContent = e.dataset.share_text;
           
             document.body.appendChild(clip_area);
             clip_area.select();

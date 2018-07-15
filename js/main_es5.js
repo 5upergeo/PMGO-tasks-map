@@ -252,12 +252,24 @@
         var img = "https://media.line.me/img/web/zh_TW/lineit_select_line_icon_01.png"; // line 按鈕圖示
         var url = 'https://5upergeo.github.io/PMGO-tasks-map/?lat=' + reward.lat + '&lng=' + reward.lng;
 
-        var line_text = new Date().toLocaleDateString() + '\n' + reward.site_name + '\n' + reward.task + '\n' + reward.address + '\ngoogle map\uFF1A\nhttps://www.google.com.tw/maps/place/' + reward.lat + ',' + reward.lng + '\n\u5730\u5716\u9023\u7D50\uFF1A';
+        var share_text = new Date().toLocaleDateString() + '\n' + reward.site_name + '\n' + reward.task + '\n' + reward.address + '\ngoogle map\uFF1A\nhttps://www.google.com.tw/maps/place/' + reward.lat + ',' + reward.lng + '\n\u5730\u5716\u9023\u7D50\uFF1A\n' + url;
 
         // 行動裝置語法
-        href = "http://line.naver.jp/R/msg/text/?" + encodeURIComponent(line_text) + "%0D%0A" + encodeURIComponent(url);
+        href = "http://line.naver.jp/R/msg/text/?" + encodeURIComponent(share_text);
 
-        var show_msg = '\n            <div class=\'pokestops\'>\n                <h3>' + reward.site_name + '</h3>\n                <hr>\n                <b>' + task[0] + '</b><br>\u2714\uFE0F\uFF1A' + reward['T&F'].T + ', \u274C\uFF1A' + reward['T&F'].F + '\n                <div class="crop">\n                    <img src="https://images.weserv.nl/?url=' + reward.image.replace(/^https?\:\/\//g, '') + '&w=70&h=70&il&trim=10&t=squaredown">\n                </div>\n                <a href=' + googleNavigation + ' target="_blank" style="font-size: 1.5em;">\uD83D\uDE98google\u5C0E\u822A</a><br>\n                <a href=' + href + ' target=\'_blank\'><img src=' + img + '></a>\n            </div>\n        ';
+        var show_msg = '\n            <div class=\'pokestops\'>\n                <h3>' + reward.site_name + '</h3>\n                <hr>\n                <b>' + task[0] + '</b><br>\u2714\uFE0F\uFF1A' + reward['T&F'].T + ', \u274C\uFF1A' + reward['T&F'].F + '\n                <div class="crop">\n                    <img src="https://images.weserv.nl/?url=' + reward.image.replace(/^https?\:\/\//g, '') + '&w=70&h=70&il&trim=10&t=squaredown">\n                </div>\n                <a href=' + googleNavigation + ' target="_blank">\uD83D\uDE98google\u5C0E\u822A</a><br>\n                <a href=' + href + ' target=\'_blank\' class="line_share"><img src=' + img + '></a>\n                <a href="#" class="web_share" onclick="copy_text(this)" data-share_text = \'' + share_text + '\'>\u8907\u88FD\u5206\u4EAB\u6587\u5B57</a>\n            </div>\n        ';
+
+        window.copy_text = function (e) {
+
+            var clip_area = document.createElement('textarea');
+            clip_area.textContent = e.dataset.share_text;
+
+            document.body.appendChild(clip_area);
+            clip_area.select();
+
+            document.execCommand('copy');
+            clip_area.remove();
+        };
 
         layer_group[task[1]].push(L.marker([reward.lat, reward.lng], {
             // icon: task_icon[task[1]]
