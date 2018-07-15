@@ -262,10 +262,10 @@
         const img = "https://media.line.me/img/web/zh_TW/lineit_select_line_icon_01.png"; // line 按鈕圖示
         const url = `https://5upergeo.github.io/PMGO-tasks-map/?lat=${reward.lat}&lng=${reward.lng}`
 
-        const line_text = `${new Date().toLocaleDateString()}\n${reward.site_name}\n${reward.task}\n${reward.address}\ngoogle map：\nhttps://www.google.com.tw/maps/place/${reward.lat},${reward.lng}\n地圖連結：`;
+        const share_text = `${new Date().toLocaleDateString()}\n${reward.site_name}\n${reward.task}\n${reward.address}\ngoogle map：\nhttps://www.google.com.tw/maps/place/${reward.lat},${reward.lng}\n地圖連結：\n${url}`;
 
         // 行動裝置語法
-        href = "http://line.naver.jp/R/msg/text/?" + encodeURIComponent(line_text) + "%0D%0A" + encodeURIComponent(url);
+        href = "http://line.naver.jp/R/msg/text/?" + encodeURIComponent(share_text);
 
         var show_msg = `
             <div class='pokestops'>
@@ -275,10 +275,22 @@
                 <div class="crop">
                     <img src="https://images.weserv.nl/?url=${reward.image.replace(/^https?\:\/\//g, '')}&w=70&h=70&il&trim=10&t=squaredown">
                 </div>
-                <a href=${googleNavigation} target="_blank" style="font-size: 1.5em;">🚘google導航</a><br>
-                <a href=${href} target='_blank'><img src=${img}></a>
+                <a href=${googleNavigation} target="_blank">🚘google導航</a><br>
+                <a href=${href} target='_blank' class="line_share"><img src=${img}></a>
+                <a href="#" class="web_share" onclick='copy_text()'>複製分享文字</a>
             </div>
         `
+
+        window.copy_text = function(){
+            var clip_area = document.createElement('textarea');
+            clip_area.textContent = share_text;
+          
+            document.body.appendChild(clip_area);
+            clip_area.select();
+              
+            document.execCommand('copy');
+            clip_area.remove();
+        }
 
         layer_group[task[1]].push(
             L.marker([reward.lat, reward.lng], {

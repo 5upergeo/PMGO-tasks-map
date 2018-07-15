@@ -34,6 +34,10 @@ body,
     margin-bottom: 0;
 }
 
+.pokestops a {
+    font-size: 1.5em;
+}
+
 .pokestops p {
     margin-top: 0;
 }
@@ -143,7 +147,19 @@ body,
         width: 30px;
     }
 
+    .web_share {
+        display: none;
+    }
+
     /* .info {
         background-color: inherit;
     } */
+}
+
+@media only screen and (min-width: 768px) {
+
+    .line_share {
+        display: none;
+    }
+
 }
