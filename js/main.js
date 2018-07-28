@@ -79,39 +79,57 @@
     });
 
     // 回報任務
-    // let return_task_control = L.Control.extend({
+    let return_task_control = L.Control.extend({
 
-    //     options: {
-    //         position: 'topleft'
-    //     },
+        options: {
+            position: 'topleft'
+        },
 
-    //     onAdd: function (map) {
-    //         control = L.DomUtil.create('div', 'pointer leaflet-bar leaflet-control leaflet-control-custom return_task');
+        onAdd: function (map) {
+            control = L.DomUtil.create('div', 'pointer leaflet-bar leaflet-control leaflet-control-custom return_task');
 
-    //         control.style.backgroundColor = 'white';
-    //         control.style.backgroundImage = "url(img/add_64.png)";
-    //         control.style.backgroundSize = "30px 30px";
-    //         control.style.width = '30px';
-    //         control.style.height = '30px';
+            control.style.backgroundColor = 'white';
+            control.style.backgroundImage = "url(img/add_64.png)";
+            control.style.backgroundSize = "30px 30px";
+            control.style.width = '30px';
+            control.style.height = '30px';
 
-    //         control.onclick = function () {
-    //             let conter = map.getCenter();
-    //             // http://127.0.0.1:5000/
-    //             // https://pokestop-taiwan-2.herokuapp.com/
-    //             const url = `https://pokestop-taiwan-2.herokuapp.com/get_bbox_sites/${conter.lat}/${conter.lng}`
-    //             fetch(url)
-    //                 .then(d => d.json())
-    //                 .then(
-    //                     d => setPokestops(d)
-    //                 );
+            control.onclick = function () {
 
-    //             this.classList.toggle("use");
-    //             document.getElementsByClassName('select_task')[0].classList.toggle("hide");
-    //         }
+                Promise.all([getLineInfo()])
+                .then((d) => {
+                    let profile = d[0];
+                    console.log(profile);
 
-    //         return control;
-    //     }
-    // });
+                    if (!profile.success){
+                        alert('請透過加入Line機器人[oh?]，啟動回報權限。')
+                    } else {
+
+                        let user_info = document.getElementById('Line_displayName');
+                        user_info.value = profile.displayName;
+                        user_info.dataset.LineID = profile.userId;
+
+                        let conter = map.getCenter();
+                        // http://127.0.0.1:5000/
+                        // https://pokestop-taiwan-2.herokuapp.com/
+                        const url = `https://pokestop-taiwan-1.herokuapp.com/get_bbox_sites/${conter.lat}/${conter.lng}`
+                        fetch(url)
+                            .then(d => d.json())
+                            .then(
+                                d => setPokestops(d)
+                            );
+
+                        this.classList.toggle("use");
+                        document.getElementsByClassName('select_task')[0].classList.toggle("hide");
+
+                    }
+                })
+
+            }
+
+            return control;
+        }
+    });
 
     // 回報說明
     let return_task_info = L.Control.extend({
@@ -141,7 +159,7 @@
     map.addLayer(streets)
         .addControl(new locate_control())
         .addControl(new relaod_control())
-        // .addControl(new return_task_control())
+        .addControl(new return_task_control())
         .addControl(new return_task_info())
         .on('load', onLoad)
         .on('moveend', setPosition)
@@ -154,38 +172,39 @@
         setPosition();
     }
 
-    // function return_task() {
+    function return_task() {
 
-    //     let pokestop_info = document.getElementById('pokestops_nearby').value.split('＠');
-    //     let task = document.getElementById('tasks').value;
+        let LineID =document.getElementById('Line_displayName').dataset.LineID;
+        let pokestop_info = document.getElementById('pokestops_nearby').value.split('＠');
+        let task = document.getElementById('tasks').value;
 
-    //     fetch(url, {
-    //             method: "POST",
-    //             body: `pokestop=${encodeURIComponent(pokestop_info[0])}&lat=${encodeURIComponent(pokestop_info[1])}&lng=${encodeURIComponent(pokestop_info[2])}&image=${encodeURIComponent(pokestop_info[3])}&task=${encodeURIComponent(task)}`,
-    //             headers: {
-    //                 'Content-Type': 'application/x-www-form-urlencoded'
-    //             }
-    //         })
-    //         .then(d => d.json())
-    //         .then(d => {
-    //             if (d.success){
-    //                 onLoad();
-    //             }
-    //             document.getElementsByClassName('return_task')[0].classList.toggle("use");
-    //             document.getElementsByClassName('select_task')[0].classList.toggle("hide");
-    //         });
-    // }
+        fetch(url, {
+                method: "POST",
+                body: `LineID=${LineID}&pokestop=${encodeURIComponent(pokestop_info[0])}&lat=${encodeURIComponent(pokestop_info[1])}&lng=${encodeURIComponent(pokestop_info[2])}&image=${encodeURIComponent(pokestop_info[3])}&task=${encodeURIComponent(task)}`,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            })
+            .then(d => d.json())
+            .then(d => {
+                if (d.success){
+                    onLoad();
+                }
+                document.getElementsByClassName('return_task')[0].classList.toggle("use");
+                document.getElementsByClassName('select_task')[0].classList.toggle("hide");
+            });
+    }
 
-    // document.getElementById('return_task').onclick = return_task;
+    document.getElementById('return_task').onclick = return_task;
 
     // 抓取資料
     function getData() {
 
-        Promise.all([getTasks(), getExistingData()])
+        Promise.all([getTasks(), getExistingData(), getTasksFull()])
             .then((d) => {
                 let tasks = d[0];
                 getIcons(tasks);
-                // setTasks(d[2]);
+                setTasks(d[2]);
                 // , getTasksFull()
 
                 // markers = [];
@@ -354,6 +373,13 @@
         return fetch(`${url}?method=get_existing_data`).then(d => d.json());
     }
 
+    // 取得任務清單
+    function getLineInfo() {
+        const urlParams = new URLSearchParams(location.search);
+        const LineID = urlParams.get('LineID') || localStorage.getItem('LineID') || "";
+        return fetch(`${url}?method=get_profile&LineID=${LineID}`).then(d => d.json());
+    }
+
     // 監聽GPS訊號
     function onLocationFound(e) {
         window.red.setLatLng(e.latlng);
@@ -374,17 +400,6 @@
         };
         return "";
     }
-
-    // 取得querystring參數
-    // function getParameterByName(name, url) {
-    //     if (!url) url = window.location.href;
-    //     name = name.replace(/[\[\]]/g, "\\$&");
-    //     var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-    //         results = regex.exec(url);
-    //     if (!results) return null;
-    //     if (!results[2]) return '';
-    //     return decodeURIComponent(results[2].replace(/\+/g, " "));
-    // }
 
     // 取得座標(querystring -> localStorage -> 北車)
     function getPosition() {
@@ -414,6 +429,5 @@
         localStorage.setItem('lng', lng);
         localStorage.setItem('zoom', map.getZoom());
     };
-
 
 })(window, L)
