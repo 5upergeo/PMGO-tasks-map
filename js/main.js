@@ -99,7 +99,8 @@
                 Promise.all([getLineInfo()])
                 .then((d) => {
                     let profile = d[0];
-                    console.log(profile);
+                    
+                    localStorage.setItem('LineID', profile.userId);
 
                     if (!profile.success){
                         alert('請透過加入Line機器人[oh?]，啟動回報權限。')
