@@ -1,5 +1,3 @@
-'use strict';
-
 (function (window, L) {
 
     var url = 'https://script.google.com/macros/s/AKfycbyOkCaKC-q75jN8NPx4oxLvkcIyEJLDGZDKUuAZ_Rl9JufGr1Uf/exec';
