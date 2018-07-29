@@ -1,3 +1,5 @@
+'use strict';
+
 (function (window, L) {
 
     var url = 'https://script.google.com/macros/s/AKfycbyOkCaKC-q75jN8NPx4oxLvkcIyEJLDGZDKUuAZ_Rl9JufGr1Uf/exec';
@@ -86,7 +88,7 @@
         },
 
         onAdd: function onAdd(map) {
-            control = L.DomUtil.create('div', 'pointer leaflet-bar leaflet-control leaflet-control-custom return_task');
+            var control = L.DomUtil.create('div', 'pointer leaflet-bar leaflet-control leaflet-control-custom return_task');
 
             control.style.backgroundColor = 'white';
             control.style.backgroundImage = "url(img/add_64.png)";
@@ -271,7 +273,7 @@
         var share_text = new Date().toLocaleDateString() + '\n' + reward.site_name + '\n' + reward.task + '\n' + reward.address + '\ngoogle map\uFF1A\nhttps://www.google.com.tw/maps/place/' + reward.lat + ',' + reward.lng + '\n\u5730\u5716\u9023\u7D50\uFF1A\n' + url;
 
         // 行動裝置語法
-        href = "http://line.naver.jp/R/msg/text/?" + encodeURIComponent(share_text);
+        var href = "http://line.naver.jp/R/msg/text/?" + encodeURIComponent(share_text);
 
         var show_msg = '\n            <div class=\'pokestops\'>\n                <h3>' + reward.site_name + '</h3>\n                <hr>\n                <b>' + task[0] + '</b><br>\u2714\uFE0F\uFF1A' + reward['T&F'].T + ', \u274C\uFF1A' + reward['T&F'].F + '\n                <div class="crop">\n                    <img src="https://images.weserv.nl/?url=' + reward.image.replace(/^https?\:\/\//g, '') + '&w=70&h=70&il&trim=10&t=squaredown">\n                </div>\n                <a href=' + googleNavigation + ' target="_blank">\uD83D\uDE98google\u5C0E\u822A</a><br>\n                <a href=' + href + ' target=\'_blank\' class="line_share"><img src=' + img + '></a>\n                <a href="#" class="web_share" onclick="copy_text(this)" data-share_text = \'' + share_text + '\'>\u8907\u88FD\u5206\u4EAB\u6587\u5B57</a>\n            </div>\n        ';
 

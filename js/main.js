@@ -86,7 +86,7 @@
         },
 
         onAdd: function (map) {
-            control = L.DomUtil.create('div', 'pointer leaflet-bar leaflet-control leaflet-control-custom return_task');
+            let control = L.DomUtil.create('div', 'pointer leaflet-bar leaflet-control leaflet-control-custom return_task');
 
             control.style.backgroundColor = 'white';
             control.style.backgroundImage = "url(img/add_64.png)";
@@ -285,7 +285,7 @@
         const share_text = `${new Date().toLocaleDateString()}\n${reward.site_name}\n${reward.task}\n${reward.address}\ngoogle map：\nhttps://www.google.com.tw/maps/place/${reward.lat},${reward.lng}\n地圖連結：\n${url}`;
 
         // 行動裝置語法
-        href = "http://line.naver.jp/R/msg/text/?" + encodeURIComponent(share_text);
+        const href = "http://line.naver.jp/R/msg/text/?" + encodeURIComponent(share_text);
 
         var show_msg = `
             <div class='pokestops'>
