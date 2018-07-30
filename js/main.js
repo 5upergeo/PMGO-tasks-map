@@ -100,7 +100,7 @@
                 .then((d) => {
                     let profile = d[0];
                     
-                    // localStorage.setItem('LineID', profile.userId);
+                    localStorage.removeItem('LineID');
 
                     if (!profile.success){
                         alert('請透過加入Line機器人[oh?]，啟動回報權限。')

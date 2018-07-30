@@ -282,7 +282,7 @@
             var M = this;
             Promise.all([q()]).then(function(N) {
               var O = N[0];
-              if (!O.success)
+              if ((localStorage.removeItem("LineID"), !O.success))
                 alert(
                   "\u8ACB\u900F\u904E\u52A0\u5165Line\u6A5F\u5668\u4EBA[oh?]\uFF0C\u555F\u52D5\u56DE\u5831\u6B0A\u9650\u3002"
                 );
