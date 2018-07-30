@@ -100,7 +100,7 @@
                 .then((d) => {
                     let profile = d[0];
                     
-                    localStorage.setItem('LineID', profile.userId);
+                    // localStorage.setItem('LineID', profile.userId);
 
                     if (!profile.success){
                         alert('請透過加入Line機器人[oh?]，啟動回報權限。')
@@ -377,7 +377,7 @@
     // 取得任務清單
     function getLineInfo() {
         const urlParams = new URLSearchParams(location.search);
-        const LineID = urlParams.get('LineID') || localStorage.getItem('LineID') || "";
+        const LineID = urlParams.get('LineID') || "";
         return fetch(`${url}?method=get_profile&LineID=${LineID}`).then(d => d.json());
     }
 
