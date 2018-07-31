@@ -99,9 +99,11 @@
         J["T&F"].T +
         ", \u274C\uFF1A" +
         J["T&F"].F +
-        '\n                <div class="crop">\n                    <img src="https://images.weserv.nl/?url=' +
+        '\n                <div class="crop">\n                    <!-- <img src="https://images.weserv.nl/?url=' +
         J.image.replace(/^https?\:\/\//g, "") +
-        '&w=70&h=70&il&trim=10&t=squaredown">\n                </div>\n                <a href=' +
+        '&w=70&h=70&il&trim=10&t=squaredown">  -->\n                    <img src="' +
+        J.image +
+        '">\n                </div>\n                <a href=' +
         K +
         ' target="_blank">\uD83D\uDE98google\u5C0E\u822A</a><br>\n                <a href=' +
         R +
