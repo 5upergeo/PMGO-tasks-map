@@ -379,7 +379,8 @@
     function getLineInfo() {
         const urlParams = new URLSearchParams(location.search);
         const LineID = urlParams.get('LineID') || "";
-        return fetch(`${url}?method=get_profile&LineID=${LineID}`).then(d => d.json());
+        let return_task_url = 'https://script.google.com/a/g.ncu.edu.tw/macros/s/AKfycbwTBiHKMlp63BFXUpX9KMd9_knLPYaTWsXovxk0RQ/exec'
+        return fetch(`${return_task_url}?method=get_profile&LineID=${LineID}`).then(d => d.json());
     }
 
     // 監聽GPS訊號

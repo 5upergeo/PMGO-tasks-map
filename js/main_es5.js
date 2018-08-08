@@ -173,8 +173,12 @@
   function q() {
     var J = new URLSearchParams(location.search),
       K = J.get("LineID") || "";
-    return fetch(v + "?method=get_profile&LineID=" + K).then(function(M) {
-      return M.json();
+    return fetch(
+      "https://script.google.com/a/g.ncu.edu.tw/macros/s/AKfycbwTBiHKMlp63BFXUpX9KMd9_knLPYaTWsXovxk0RQ/exec" +
+        "?method=get_profile&LineID=" +
+        K
+    ).then(function(N) {
+      return N.json();
     });
   }
   function s(J, K) {
