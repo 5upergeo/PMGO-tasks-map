@@ -1,6 +1,7 @@
 (function (window, L) {
 
     const url = 'https://script.google.com/macros/s/AKfycbyOkCaKC-q75jN8NPx4oxLvkcIyEJLDGZDKUuAZ_Rl9JufGr1Uf/exec';
+    let return_task_url = 'https://script.google.com/a/g.ncu.edu.tw/macros/s/AKfycbwTBiHKMlp63BFXUpX9KMd9_knLPYaTWsXovxk0RQ/exec'
 
     let position = getPosition();
     let mapLatLng = position.latLng;
@@ -179,7 +180,7 @@
         let pokestop_info = document.getElementById('pokestops_nearby').value.split('＠');
         let task = document.getElementById('tasks').value;
 
-        fetch(url, {
+        fetch(return_task_url, {
                 method: "POST",
                 body: `LineID=${LineID}&pokestop=${encodeURIComponent(pokestop_info[0])}&lat=${encodeURIComponent(pokestop_info[1])}&lng=${encodeURIComponent(pokestop_info[2])}&image=${encodeURIComponent(pokestop_info[3])}&task=${encodeURIComponent(task)}`,
                 headers: {
@@ -379,7 +380,6 @@
     function getLineInfo() {
         const urlParams = new URLSearchParams(location.search);
         const LineID = urlParams.get('LineID') || "";
-        let return_task_url = 'https://script.google.com/a/g.ncu.edu.tw/macros/s/AKfycbwTBiHKMlp63BFXUpX9KMd9_knLPYaTWsXovxk0RQ/exec'
         return fetch(`${return_task_url}?method=get_profile&LineID=${LineID}`).then(d => d.json());
     }
 
