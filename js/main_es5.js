@@ -206,7 +206,7 @@
   var v =
       "https://script.google.com/macros/s/AKfycbyOkCaKC-q75jN8NPx4oxLvkcIyEJLDGZDKUuAZ_Rl9JufGr1Uf/exec",
     w =
-      "https://script.google.com/a/g.ncu.edu.tw/macros/s/AKfycbwTBiHKMlp63BFXUpX9KMd9_knLPYaTWsXovxk0RQ/exec",
+      "https://script.google.com/macros/s/AKfycbzMvd730XVRRCoEL13052qsOC81kwPKeWRWZJV9B60e59nXCDLZ/exec",
     x = (function() {
       var K = new URLSearchParams(location.search),
         M = K.get("lat") || localStorage.getItem("lat") || 25.046266,
