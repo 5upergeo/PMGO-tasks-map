@@ -315,18 +315,24 @@
             clip_area.remove();
         }
 
-        layer_group[task[1]].push(
-            L.marker([reward.lat, reward.lng], {
-                // icon: task_icon[task[1]]
-                icon: L.divIcon({
-                    className: (reward['T&F'].F - reward['T&F'].T) >= 1 ? "map-marker-fake map-marker" : "map-marker",
-                    iconSize: [48, 48],
-                    iconAnchor: [24, 24],
-                    popupAnchor: [0, -18],
-                    html: `<div><img src="./img/${task[1]}_.png"></div>`
-                }),
-            }).bindPopup(show_msg)
-        )
+        try {
+            layer_group[task[1]].push(
+                L.marker([reward.lat, reward.lng], {
+                    // icon: task_icon[task[1]]
+                    icon: L.divIcon({
+                        className: (reward['T&F'].F - reward['T&F'].T) >= 1 ? "map-marker-fake map-marker" : "map-marker",
+                        iconSize: [48, 48],
+                        iconAnchor: [24, 24],
+                        popupAnchor: [0, -18],
+                        html: `<div><img src="./img/${task[1]}_.png"></div>`
+                    }),
+                }).bindPopup(show_msg)
+            )
+        }
+        catch(err) {
+            console.log('又有人回報舊任務惹QAQ');
+        }
+
 
     }
 
