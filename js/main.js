@@ -286,7 +286,11 @@
         const share_text = `${new Date().toLocaleDateString()}\n${reward.site_name}\n${reward.task}\n${reward.address}\ngoogle map：\nhttps://www.google.com.tw/maps/place/${reward.lat},${reward.lng}\n地圖連結：\n${url}`;
 
         // 行動裝置語法
-        const href = "http://line.naver.jp/R/msg/text/?" + encodeURIComponent(share_text);
+        if (navigator.userAgent.match(/(android|iphone|ipod|ipad);?/i)) {
+            const href = "line://msg/text/" + encodeURIComponent(share_text);
+        } else {
+            const href = "http://line.naver.jp/R/msg/text/?" + encodeURIComponent(share_text);
+        }
 
         var show_msg = `
             <div class='pokestops'>
