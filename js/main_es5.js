@@ -88,39 +88,37 @@
         "," +
         K.lng +
         "\n\u5730\u5716\u9023\u7D50\uFF1A\n" +
-        Q;
-    if (navigator.userAgent.match(/(android|iphone|ipod|ipad);?/i))
-      "line://msg/text/" + encodeURIComponent(R);
-    else "http://line.naver.jp/R/msg/text/?" + encodeURIComponent(R);
-    var N =
-      "\n            <div class='pokestops'>\n                <h3>" +
-      K.site_name +
-      "</h3>\n                <hr>\n                <b>" +
-      O[0] +
-      "</b><br>\u2714\uFE0F\uFF1A" +
-      K["T&F"].T +
-      ", \u274C\uFF1A" +
-      K["T&F"].F +
-      '\n                <div class="crop">\n                    <!-- <img src="https://images.weserv.nl/?url=' +
-      K.image.replace(/^https?\:\/\//g, "") +
-      '&w=70&h=70&il&trim=10&t=squaredown">  -->\n                    <img src="' +
-      K.image +
-      '">\n                </div>\n                <a href=' +
-      M +
-      ' target="_blank">\uD83D\uDE98google\u5C0E\u822A</a><br>\n                <a href=' +
-      href +
-      " target='_blank' class=\"line_share\"><img src=" +
-      "https://media.line.me/img/web/zh_TW/lineit_select_line_icon_01.png" +
-      '></a>\n                <a href="#" class="web_share" onclick="copy_text(this)" data-share_text = \'' +
-      R +
-      "'>\u8907\u88FD\u5206\u4EAB\u6587\u5B57</a>\n            </div>\n        ";
-    a.copy_text = function(U) {
-      var V = document.createElement("textarea");
-      (V.textContent = U.dataset.share_text),
-        document.body.appendChild(V),
-        V.select(),
+        Q,
+      S = "line://msg/text/" + encodeURIComponent(R),
+      N =
+        "\n            <div class='pokestops'>\n                <h3>" +
+        K.site_name +
+        "</h3>\n                <hr>\n                <b>" +
+        O[0] +
+        "</b><br>\u2714\uFE0F\uFF1A" +
+        K["T&F"].T +
+        ", \u274C\uFF1A" +
+        K["T&F"].F +
+        '\n                <div class="crop">\n                    <!-- <img src="https://images.weserv.nl/?url=' +
+        K.image.replace(/^https?\:\/\//g, "") +
+        '&w=70&h=70&il&trim=10&t=squaredown">  -->\n                    <img src="' +
+        K.image +
+        '">\n                </div>\n                <a href=' +
+        M +
+        ' target="_blank">\uD83D\uDE98google\u5C0E\u822A</a><br>\n                <a href=' +
+        S +
+        " target='_blank' class=\"line_share\"><img src=" +
+        "https://media.line.me/img/web/zh_TW/lineit_select_line_icon_01.png" +
+        '></a>\n                <a href="#" class="web_share" onclick="copy_text(this)" data-share_text = \'' +
+        R +
+        "'>\u8907\u88FD\u5206\u4EAB\u6587\u5B57</a>\n            </div>\n        ";
+    a.copy_text = function(T) {
+      var U = document.createElement("textarea");
+      (U.textContent = T.dataset.share_text),
+        document.body.appendChild(U),
+        U.select(),
         document.execCommand("copy"),
-        V.remove();
+        U.remove();
     };
     try {
       C[O[1]].push(
@@ -139,7 +137,7 @@
           })
           .bindPopup(N)
       );
-    } catch (U) {
+    } catch (T) {
       console.log("\u53C8\u6709\u4EBA\u56DE\u5831\u820A\u4EFB\u52D9\u60F9QAQ");
     }
   }
