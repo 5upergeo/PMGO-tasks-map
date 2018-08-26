@@ -114,7 +114,11 @@
                         let conter = map.getCenter();
                         // http://127.0.0.1:5000/
                         // https://pokestop-taiwan-2.herokuapp.com/
-                        const url = `https://pokestop-taiwan-1.herokuapp.com/get_bbox_sites/${conter.lat}/${conter.lng}`
+
+                        let dd = new Date().getDate();
+                        dd = dd > 15 ? 3 : 1;
+
+                        const url = `https://pokestop-taiwan-${dd}.herokuapp.com/get_bbox_sites/${conter.lat}/${conter.lng}`
                         fetch(url)
                             .then(d => d.json())
                             .then(
