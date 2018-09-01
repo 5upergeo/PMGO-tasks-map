@@ -195,6 +195,8 @@
             .then(d => {
                 if (d.success){
                     onLoad();
+                } else {
+                    alert(d.msg);
                 }
                 document.getElementsByClassName('return_task')[0].classList.toggle("use");
                 document.getElementsByClassName('select_task')[0].classList.toggle("hide");
