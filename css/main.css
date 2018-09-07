@@ -127,6 +127,7 @@ body,
     top: calc( 50% - 24px );
     right: calc( 50% - 16px );
     z-index: 9999;
+    pointer-events: none;
 }
 
 @media only screen and (max-width: 768px) {
