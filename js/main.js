@@ -116,7 +116,7 @@
                         // https://pokestop-taiwan-2.herokuapp.com/
 
                         let dd = new Date().getDate();
-                        dd = dd > 15 ? 3 : 1;
+                        dd = dd > 15 ? 2 : 1;
 
                         const url = `https://pokestop-taiwan-${dd}.herokuapp.com/get_bbox_sites/${conter.lat}/${conter.lng}`
                         fetch(url)
