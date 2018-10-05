@@ -319,7 +319,7 @@
                     popupAnchor: [0, -18],
                     html: '<div><img src="./img/' + task[1] + '_.png"></div>'
                 })
-            }).bindPopup(show_msg));
+            }).bindPopup(show_msg, { autoPan: false }));
         } catch (err) {
             console.log('又有人回報舊任務惹QAQ');
         }
