@@ -11,13 +11,21 @@ body,
     width: 100vw;
 }
 
+img {
+    max-width: 120px;
+}
+
+.leaflet-popup-content {
+    margin: 5px;
+}
+
 .leaflet-tile-container.leaflet-zoom-animated {
     filter: opacity(0.8);
 }
 
 .crop img {
-    height: 150px;
-    width: 150px;
+    height: 100px;
+    width: 100px;
     border-radius: 50%;
     object-fit: cover;
     border: #3cc3fb 7px solid;
@@ -26,7 +34,7 @@ body,
 .pokestops {
     text-align: center;
     margin-bottom: 0.5em;
-    width: 164px;
+    width: 130px;
 }
 
 .pokestops h3 {

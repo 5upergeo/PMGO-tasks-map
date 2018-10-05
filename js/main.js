@@ -313,7 +313,6 @@
         var show_msg = `
             <div class='pokestops'>
                 <h3>${reward.site_name}</h3>
-                <hr>
                 <b>${task[0]}</b><br>✔️：${reward['T&F'].T}, ❌：${reward['T&F'].F}
                 <div class="crop">
                     <!-- <img src="https://images.weserv.nl/?url=${reward.image.replace(/^https?\:\/\//g, '')}&w=70&h=70&il&trim=10&t=squaredown">  -->
