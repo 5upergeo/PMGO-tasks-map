@@ -162,7 +162,7 @@
         }
     });
 
-    map.addLayer(streets).addControl(new locate_control()).addControl(new relaod_control()).addControl(new return_task_control()).addControl(new return_task_info()).on('load', onLoad).on('moveend', setPosition).on('locationfound', onLocationFound).setView(mapLatLng, mapZoom);
+    map.addLayer(streets).addControl(new locate_control()).addControl(new relaod_control()).addControl(new return_task_control()).addControl(new return_task_info()).on('load', onLoad).on('moveend', setPosition).on('moveend', setMapView).on('locationfound', onLocationFound).setView(mapLatLng, mapZoom);
 
     // 地圖建立時執行
     function onLoad() {
@@ -170,6 +170,7 @@
         setPosition();
     }
 
+    // 回報任務
     function return_task() {
 
         var LineID = document.getElementById('Line_displayName').dataset.LineID;
@@ -186,7 +187,8 @@
             return d.json();
         }).then(function (d) {
             if (d.success) {
-                setRewards({
+
+                window.reports.push({
                     'T&F': { T: 0, F: 0 },
                     'task': task,
                     'lat': pokestop_info[1],
@@ -195,30 +197,10 @@
                     'image': pokestop_info[3],
                     'address': ''
                 });
+                setMapView();
+                // setRewards();
 
-                map.eachLayer(function (layer) {
-                    if (!layer.options.fixed) {
-                        map.removeLayer(layer);
-                    }
-                });
-
-                var overlayMaps = Object.keys(layer_group).reduce(function (all, reward) {
-                    var layer = L.layerGroup(layer_group[reward], {
-                        fixed: false
-                    });
-                    map.addLayer(layer);
-                    all['<img src="./img/' + reward + '_.png" class="controlIcon">'] = layer;
-                    return all;
-                }, {});
-
-                map.removeControl(layer_control);
-
-                layer_control = L.control.layers({}, overlayMaps, {
-                    position: "bottomleft",
-                    collapsed: false
-                }).addTo(map);
-
-                // onLoad();
+                resetTask();
             } else {
                 alert(d.msg);
             }
@@ -236,34 +218,29 @@
             var tasks = d[0];
             getIcons(tasks);
             setTasks(d[2]);
-            // , getTasksFull()
 
-            // markers = [];
-            var reports = d[1];
-            reports.forEach(setRewards);
-
-            map.eachLayer(function (layer) {
-                if (!layer.options.fixed) {
-                    map.removeLayer(layer);
-                }
-            });
-
-            var overlayMaps = Object.keys(layer_group).reduce(function (all, reward) {
-                var layer = L.layerGroup(layer_group[reward], {
-                    fixed: false
-                });
-                map.addLayer(layer);
-                all['<img src="./img/' + reward + '_.png" class="controlIcon">'] = layer;
-                return all;
-            }, {});
-
-            map.removeControl(layer_control);
-
-            layer_control = L.control.layers({}, overlayMaps, {
-                position: "bottomleft",
-                collapsed: false
-            }).addTo(map);
+            window.tasks = tasks;
+            window.reports = d[1];
+            setMapView();
         });
+    }
+
+    function setMapView() {
+
+        if (typeof window.reports === 'undefined') {
+            return 0;
+        }
+
+        var EW = [map.getBounds().getEast(), map.getBounds().getWest()];;
+        var NS = [map.getBounds().getNorth(), map.getBounds().getSouth()];
+
+        getIcons(window.tasks);
+
+        window.reports.filter(function (item) {
+            return item.lat < NS[0] && item.lat > NS[1] && item.lng < EW[0] && item.lng > EW[1];
+        }).forEach(setRewards);
+
+        resetTask();
     }
 
     // 產製任務回報
@@ -398,6 +375,30 @@
         return fetch(url + '?method=get_existing_data').then(function (d) {
             return d.json();
         });
+    }
+
+    function resetTask() {
+        map.eachLayer(function (layer) {
+            if (!layer.options.fixed) {
+                map.removeLayer(layer);
+            }
+        });
+
+        var overlayMaps = Object.keys(layer_group).reduce(function (all, reward) {
+            var layer = L.layerGroup(layer_group[reward], {
+                fixed: false
+            });
+            map.addLayer(layer);
+            all['<img src="./img/' + reward + '_.png" class="controlIcon">'] = layer;
+            return all;
+        }, {});
+
+        map.removeControl(layer_control);
+
+        layer_control = L.control.layers({}, overlayMaps, {
+            position: "bottomleft",
+            collapsed: false
+        }).addTo(map);
     }
 
     // 取得任務清單
