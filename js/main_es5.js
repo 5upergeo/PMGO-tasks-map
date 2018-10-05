@@ -186,7 +186,39 @@
             return d.json();
         }).then(function (d) {
             if (d.success) {
-                onLoad();
+                setRewards({
+                    'T&F': { T: 0, F: 0 },
+                    'task': task,
+                    'lat': pokestop_info[1],
+                    'lng': pokestop_info[2],
+                    'pokestop': pokestop_info[0],
+                    'image': pokestop_info[3],
+                    'address': ''
+                });
+
+                map.eachLayer(function (layer) {
+                    if (!layer.options.fixed) {
+                        map.removeLayer(layer);
+                    }
+                });
+
+                var overlayMaps = Object.keys(layer_group).reduce(function (all, reward) {
+                    var layer = L.layerGroup(layer_group[reward], {
+                        fixed: false
+                    });
+                    map.addLayer(layer);
+                    all['<img src="./img/' + reward + '_.png" class="controlIcon">'] = layer;
+                    return all;
+                }, {});
+
+                map.removeControl(layer_control);
+
+                layer_control = L.control.layers({}, overlayMaps, {
+                    position: "bottomleft",
+                    collapsed: false
+                }).addTo(map);
+
+                // onLoad();
             } else {
                 alert(d.msg);
             }
