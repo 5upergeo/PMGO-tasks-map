@@ -237,6 +237,7 @@
             });
     }
 
+    // 過濾資料
     function setMapView() {
 
         if (typeof window.reports === 'undefined'){
@@ -404,6 +405,12 @@
     }
 
     function resetTask() {
+
+        window.checkedData = Array.from(document.querySelectorAll('input[type=checkbox]'))
+            .map((item) => {
+                return item.checked
+            });
+
         map.eachLayer(function (layer) {
             if (!layer.options.fixed) {
                 map.removeLayer(layer);
@@ -425,6 +432,17 @@
             position: "bottomleft",
             collapsed: false
         }).addTo(map);
+
+        if (window.checkedData.length === 0){
+            return 0
+        }
+        Array.from(document.querySelectorAll('input[type=checkbox]'))
+            .forEach((item, index) => {
+                if (!window.checkedData[index]) {
+                    item.click()
+                }
+            });
+
     }
 
     // 取得任務清單
