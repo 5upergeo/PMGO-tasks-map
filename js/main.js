@@ -169,8 +169,7 @@
         .addControl(new return_task_info())
         .on('load', onLoad)
         .on('moveend', setPosition)
-        .on('moveend', setMapView)
-        .on('zoomend', setMapView)
+        .on('viewreset', setMapView)
         .on('locationfound', onLocationFound)
         .setView(mapLatLng, mapZoom);
 
