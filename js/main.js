@@ -168,8 +168,6 @@
         .addControl(new return_task_control())
         .addControl(new return_task_info())
         .on('load', onLoad)
-        .on('movestart', viewChange)
-        .on('zoomstart', viewChange)
         .on('moveend', setPosition)
         .on('moveend', setMapView)
         .on('zoomend', setMapView)
@@ -257,6 +255,7 @@
         }).forEach(setRewards);
 
         resetTask();
+        setONOFF();
     }
 
     // 產製任務回報
@@ -407,6 +406,15 @@
         return fetch(`${url}?method=get_existing_data`).then(d => d.json());
     }
 
+    function setONOFF(){
+        Array.from(document.querySelectorAll('input[type=checkbox]'))
+            .forEach((item)=>{
+                item.addEventListener("click", function(){
+                    viewChange();
+                });
+            })
+    }
+
     function viewChange() {
         window.checkedData = Array.from(document.querySelectorAll('input[type=checkbox]'))
         .map((item) => {
@@ -438,7 +446,7 @@
             collapsed: false
         }).addTo(map);
 
-        if (window.checkedData.length === 0){
+        if (typeof window.checkedData === 'undefined' || window.checkedData.length === 0){
             return 0
         }
         Array.from(document.querySelectorAll('input[type=checkbox]'))

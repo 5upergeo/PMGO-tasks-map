@@ -162,7 +162,7 @@
         }
     });
 
-    map.addLayer(streets).addControl(new locate_control()).addControl(new relaod_control()).addControl(new return_task_control()).addControl(new return_task_info()).on('load', onLoad).on('movestart', viewChange).on('zoomstart', viewChange).on('moveend', setPosition).on('moveend', setMapView).on('zoomend', setMapView).on('locationfound', onLocationFound).setView(mapLatLng, mapZoom);
+    map.addLayer(streets).addControl(new locate_control()).addControl(new relaod_control()).addControl(new return_task_control()).addControl(new return_task_info()).on('load', onLoad).on('moveend', setPosition).on('moveend', setMapView).on('zoomend', setMapView).on('locationfound', onLocationFound).setView(mapLatLng, mapZoom);
 
     // 地圖建立時執行
     function onLoad() {
@@ -242,6 +242,7 @@
         }).forEach(setRewards);
 
         resetTask();
+        setONOFF();
     }
 
     // 產製任務回報
@@ -378,6 +379,14 @@
         });
     }
 
+    function setONOFF() {
+        Array.from(document.querySelectorAll('input[type=checkbox]')).forEach(function (item) {
+            item.addEventListener("click", function () {
+                viewChange();
+            });
+        });
+    }
+
     function viewChange() {
         window.checkedData = Array.from(document.querySelectorAll('input[type=checkbox]')).map(function (item) {
             return item.checked;
@@ -408,7 +417,7 @@
             collapsed: false
         }).addTo(map);
 
-        if (window.checkedData.length === 0) {
+        if (typeof window.checkedData === 'undefined' || window.checkedData.length === 0) {
             return 0;
         }
         Array.from(document.querySelectorAll('input[type=checkbox]')).forEach(function (item, index) {
