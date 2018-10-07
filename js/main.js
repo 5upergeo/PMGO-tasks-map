@@ -170,6 +170,7 @@
         .on('load', onLoad)
         .on('moveend', setPosition)
         .on('moveend', setMapView)
+        .on('zoomend', setMapView)
         .on('locationfound', onLocationFound)
         .setView(mapLatLng, mapZoom);
 
