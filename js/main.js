@@ -168,8 +168,11 @@
         .addControl(new return_task_control())
         .addControl(new return_task_info())
         .on('load', onLoad)
+        .on('movestart', viewChange)
+        .on('zoomstart', viewChange)
         .on('moveend', setPosition)
-        .on('viewreset', setMapView)
+        .on('moveend', setMapView)
+        .on('zoomend', setMapView)
         .on('locationfound', onLocationFound)
         .setView(mapLatLng, mapZoom);
 
@@ -244,7 +247,7 @@
             return 0
         }
 
-        let EW = [map.getBounds().getEast(), map.getBounds().getWest()];;
+        let EW = [map.getBounds().getEast(), map.getBounds().getWest()];
         let NS = [map.getBounds().getNorth(), map.getBounds().getSouth()];
 
         getIcons(window.tasks);
@@ -404,12 +407,14 @@
         return fetch(`${url}?method=get_existing_data`).then(d => d.json());
     }
 
-    function resetTask() {
-
+    function viewChange() {
         window.checkedData = Array.from(document.querySelectorAll('input[type=checkbox]'))
-            .map((item) => {
-                return item.checked
-            });
+        .map((item) => {
+            return item.checked
+        });
+    }
+
+    function resetTask() {
 
         map.eachLayer(function (layer) {
             if (!layer.options.fixed) {
@@ -442,7 +447,6 @@
                     item.click()
                 }
             });
-
     }
 
     // 取得任務清單

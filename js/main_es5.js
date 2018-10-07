@@ -162,7 +162,7 @@
         }
     });
 
-    map.addLayer(streets).addControl(new locate_control()).addControl(new relaod_control()).addControl(new return_task_control()).addControl(new return_task_info()).on('load', onLoad).on('moveend', setPosition).on('moveend', setMapView).on('zoomend', setMapView).on('locationfound', onLocationFound).setView(mapLatLng, mapZoom);
+    map.addLayer(streets).addControl(new locate_control()).addControl(new relaod_control()).addControl(new return_task_control()).addControl(new return_task_info()).on('load', onLoad).on('movestart', viewChange).on('zoomstart', viewChange).on('moveend', setPosition).on('moveend', setMapView).on('zoomend', setMapView).on('locationfound', onLocationFound).setView(mapLatLng, mapZoom);
 
     // 地圖建立時執行
     function onLoad() {
@@ -232,7 +232,7 @@
             return 0;
         }
 
-        var EW = [map.getBounds().getEast(), map.getBounds().getWest()];;
+        var EW = [map.getBounds().getEast(), map.getBounds().getWest()];
         var NS = [map.getBounds().getNorth(), map.getBounds().getSouth()];
 
         getIcons(window.tasks);
@@ -378,11 +378,13 @@
         });
     }
 
-    function resetTask() {
-
+    function viewChange() {
         window.checkedData = Array.from(document.querySelectorAll('input[type=checkbox]')).map(function (item) {
             return item.checked;
         });
+    }
+
+    function resetTask() {
 
         map.eachLayer(function (layer) {
             if (!layer.options.fixed) {
