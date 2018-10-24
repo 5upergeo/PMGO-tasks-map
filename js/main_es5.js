@@ -16,7 +16,7 @@
     var layer_group = {};
     var layer_control = L.control.layers({}, {}, {
         position: "bottomleft",
-        collapsed: false
+        // collapsed: false
     }).addTo(map);
 
     var locate_status = false;
@@ -414,7 +414,7 @@
 
         layer_control = L.control.layers({}, overlayMaps, {
             position: "bottomleft",
-            collapsed: false
+            // collapsed: false
         }).addTo(map);
 
         if (typeof window.checkedData === 'undefined' || window.checkedData.length === 0) {
