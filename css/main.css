@@ -1,4 +1,4 @@
-body {
+body, a {
     padding: 0;
     margin: 0;
     font-family: Microsoft JhengHei, Heiti TC, LiHei Pro, Droid Sans;
@@ -138,7 +138,15 @@ img {
     pointer-events: none;
 }
 
-@media only screen and (max-width: 768px) {
+.line_share {
+    display: block;
+}
+
+.web_share {
+    display: block;
+}
+
+@media screen and (max-width: 768px) {
     .leaflet-control-custom {
         height: 40px !important;
         width: 40px !important;
@@ -157,11 +165,6 @@ img {
         line-height: 36px !important;    
     }
 
-    /* .leaflet-control-zoom .leaflet-control-zoom-out {
-        /* display: none; */
-        margin-top: 10px;
-    } */
-
     .controlIcon {
         width: 30px;
     }
@@ -170,12 +173,21 @@ img {
         display: none;
     }
 
+    .line_share {
+        display: block;
+    }
+
     /* .info {
         background-color: inherit;
     } */
 }
 
-@media only screen and (min-width: 768px) {
+@media screen and (min-width:768px) { 
+
+
+    .web_share {
+        display: block;
+    }
 
     .line_share {
         display: none;
