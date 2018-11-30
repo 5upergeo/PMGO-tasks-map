@@ -416,7 +416,7 @@
 
         layer_control = L.control.layers({}, overlayMaps, {
             position: "bottomleft",
-            collapsed: false
+            // collapsed: false
         }).addTo(map);
 
         document.getElementById('close_all').parentNode.previousSibling.checked = true;
