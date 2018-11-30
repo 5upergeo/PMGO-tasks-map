@@ -286,9 +286,9 @@
         tasks.forEach((task) => {
             task_icon[task] = L.icon({
                 iconUrl: `./img/${task}_.png`,
-                iconSize: [48, 48],
-                iconAnchor: [24, 24],
-                popupAnchor: [0, -18]
+                iconSize: [36, 36],
+                iconAnchor: [18, 18],
+                popupAnchor: [0, -12]
             });
 
             layer_group[task] = [];
@@ -345,9 +345,9 @@
                     // icon: task_icon[task[1]]
                     icon: L.divIcon({
                         className: (reward['T&F'].F - reward['T&F'].T) >= 1 ? "map-marker-fake map-marker" : "map-marker",
-                        iconSize: [48, 48],
-                        iconAnchor: [24, 24],
-                        popupAnchor: [0, -18],
+                        iconSize: [36, 36],
+                        iconAnchor: [18, 18],
+                        popupAnchor: [0, -12],
                         html: `<div><img src="./img/${task[1]}_.png"></div>`
                     }),
                 }).bindPopup(show_msg, { autoPan: false })
