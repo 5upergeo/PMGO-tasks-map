@@ -124,8 +124,8 @@ img {
 
 .map-marker-fake>div::after {
     content: url('../img/question-mark.png');
-    top: 12px;
-    left: 12px;
+    top: 6px;
+    left: 6px;
     position: fixed;
 }
 
