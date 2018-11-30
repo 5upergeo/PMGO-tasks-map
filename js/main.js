@@ -407,7 +407,7 @@
     }
 
     function setONOFF(){
-        Array.from(document.querySelectorAll('input[type=checkbox]'))
+        Array.from(document.querySelectorAll('input[type=checkbox]:not(.not_task)'))
             .forEach((item)=>{
                 item.addEventListener("click", function(){
                     viewChange();
@@ -439,14 +439,37 @@
             return all
         }, {});
 
+        overlayMaps[`<img src="./img/close_64.png" class="controlIcon" id="close_all">`] = L.layerGroup([], {});
+
         map.removeControl(layer_control);
 
         layer_control = L.control.layers({}, overlayMaps, {
             position: "bottomleft",
-            // collapsed: false
+            collapsed: false
         }).addTo(map);
 
+        document.getElementById('close_all').parentNode.previousSibling.checked = true;
+        document.getElementById('close_all').parentNode.previousSibling.classList.add('not_task');
+        document.querySelector('.not_task').addEventListener('click', function(){
+            if (this.checked) {
+                Array.from(document.querySelectorAll('input[type=checkbox]:not(.not_task)'))
+                .forEach((item, index) => {
+                    if (item.checked) {
+                        item.click()
+                    }
+                });
+            } else {
+                Array.from(document.querySelectorAll('input[type=checkbox]:not(.not_task)'))
+                .forEach((item, index) => {
+                    if (!item.checked) {
+                        item.click()
+                    }
+                });
+            }
+        })
+
         if (typeof window.checkedData === 'undefined' || window.checkedData.length === 0){
+            document.getElementById('close_all').parentNode.previousSibling.checked = false;
             return 0
         }
         Array.from(document.querySelectorAll('input[type=checkbox]'))

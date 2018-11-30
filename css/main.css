@@ -165,9 +165,9 @@ img {
         line-height: 36px !important;    
     }
 
-    /* .controlIcon {
-        width: 30px;
-    } */
+    .controlIcon {
+        width: 36px;
+    }
 
     .web_share {
         display: none;
