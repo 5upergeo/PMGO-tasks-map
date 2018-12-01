@@ -20,7 +20,8 @@ img {
 }
 
 .leaflet-tile-container.leaflet-zoom-animated {
-    filter: opacity(0.8);
+    /* filter: opacity(0.9); */
+    /* filter: grayscale(0.3); */
 }
 
 .crop img {
@@ -120,6 +121,7 @@ img {
 .map-marker img {
     width: 100%;
     height: 100%;
+    /* -webkit-filter: contrast(1.2); */
 }
 
 .map-marker-fake>div::after {

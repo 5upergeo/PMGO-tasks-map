@@ -270,8 +270,8 @@
         tasks.forEach(function (task) {
             task_icon[task] = L.icon({
                 iconUrl: './img/' + task + '_.png',
-                iconSize: [36, 36],
-                iconAnchor: [18, 18],
+                iconSize: [48, 48],
+                iconAnchor: [24, 24],
                 popupAnchor: [0, -12]
             });
 
@@ -316,9 +316,9 @@
                 // icon: task_icon[task[1]]
                 icon: L.divIcon({
                     className: reward['T&F'].F - reward['T&F'].T >= 1 ? "map-marker-fake map-marker" : "map-marker",
-                    iconSize: [36, 36],
-                    iconAnchor: [18, 18],
-                    popupAnchor: [0, -12],
+                    iconSize: [42, 42],
+                    iconAnchor: [21, 21],
+                    popupAnchor: [0, -8],
                     html: '<div><img src="./img/' + task[1] + '_.png"></div>'
                 })
             }).bindPopup(show_msg, { autoPan: false }));
@@ -415,7 +415,7 @@
         map.removeControl(layer_control);
 
         layer_control = L.control.layers({}, overlayMaps, {
-            position: "bottomleft",
+            position: "bottomleft"
             // collapsed: false
         }).addTo(map);
 
