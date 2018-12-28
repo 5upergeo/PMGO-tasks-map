@@ -100,37 +100,42 @@
             control.onclick = function () {
                 var _this = this;
 
-                Promise.all([getLineInfo()]).then(function (d) {
-                    var profile = d[0];
+                if (!this.classList.contains("use")) {
+                    Promise.all([getLineInfo()]).then(function (d) {
+                        var profile = d[0];
 
-                    localStorage.removeItem('LineID');
+                        localStorage.removeItem('LineID');
 
-                    if (!profile.success) {
-                        alert('請透過加入Line機器人[oh?]，啟動回報權限。');
-                    } else {
+                        if (!profile.success) {
+                            alert('請透過加入Line機器人[oh?]，啟動回報權限。');
+                        } else {
 
-                        var user_info = document.getElementById('Line_displayName');
-                        user_info.value = profile.displayName;
-                        user_info.dataset.LineID = profile.userId;
+                            var user_info = document.getElementById('Line_displayName');
+                            user_info.value = profile.displayName;
+                            user_info.dataset.LineID = profile.userId;
 
-                        var conter = map.getCenter();
-                        // http://127.0.0.1:5000/
-                        // https://pokestop-taiwan-2.herokuapp.com/
+                            var conter = map.getCenter();
+                            // http://127.0.0.1:5000/
+                            // https://pokestop-taiwan-2.herokuapp.com/
 
-                        var dd = new Date().getDate();
-                        dd = dd > 15 ? 2 : 1;
+                            var dd = new Date().getDate();
+                            dd = dd > 15 ? 2 : 1;
 
-                        var _url = 'https://pokestop-taiwan-' + dd + '.herokuapp.com/get_bbox_sites/' + conter.lat + '/' + conter.lng;
-                        fetch(_url).then(function (d) {
-                            return d.json();
-                        }).then(function (d) {
-                            return setPokestops(d);
-                        });
+                            var _url = 'https://pokestop-taiwan-' + dd + '.herokuapp.com/get_bbox_sites/' + conter.lat + '/' + conter.lng;
+                            fetch(_url).then(function (d) {
+                                return d.json();
+                            }).then(function (d) {
+                                return setPokestops(d);
+                            });
 
-                        _this.classList.toggle("use");
-                        document.getElementsByClassName('select_task')[0].classList.toggle("hide");
-                    }
-                });
+                            _this.classList.toggle("use");
+                            document.getElementsByClassName('select_task')[0].classList.toggle("hide");
+                        }
+                    });
+                } else {
+                    this.classList.toggle("use");
+                    document.getElementsByClassName('select_task')[0].classList.toggle("hide");
+                }
             };
 
             return control;

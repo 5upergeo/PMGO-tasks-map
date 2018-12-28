@@ -97,39 +97,46 @@
 
             control.onclick = function () {
 
-                Promise.all([getLineInfo()])
-                .then((d) => {
-                    let profile = d[0];
-                    
-                    localStorage.removeItem('LineID');
+                if (!this.classList.contains("use")){
+                    Promise.all([getLineInfo()])
+                    .then((d) => {
+                        let profile = d[0];
+                        
+                        localStorage.removeItem('LineID');
+    
+                        if (!profile.success){
+                            alert('請透過加入Line機器人[oh?]，啟動回報權限。')
+                        } else {
+    
+                            let user_info = document.getElementById('Line_displayName');
+                            user_info.value = profile.displayName;
+                            user_info.dataset.LineID = profile.userId;
+    
+                            let conter = map.getCenter();
+                            // http://127.0.0.1:5000/
+                            // https://pokestop-taiwan-2.herokuapp.com/
+    
+                            let dd = new Date().getDate();
+                            dd = dd > 15 ? 2 : 1;
+    
+                            const url = `https://pokestop-taiwan-${dd}.herokuapp.com/get_bbox_sites/${conter.lat}/${conter.lng}`
+                            fetch(url)
+                                .then(d => d.json())
+                                .then(
+                                    d => setPokestops(d)
+                                );
+    
+                            this.classList.toggle("use");
+                            document.getElementsByClassName('select_task')[0].classList.toggle("hide");
+    
+                        }
+                    })
+                } else {
+                    this.classList.toggle("use");
+                    document.getElementsByClassName('select_task')[0].classList.toggle("hide");
+                }
 
-                    if (!profile.success){
-                        alert('請透過加入Line機器人[oh?]，啟動回報權限。')
-                    } else {
 
-                        let user_info = document.getElementById('Line_displayName');
-                        user_info.value = profile.displayName;
-                        user_info.dataset.LineID = profile.userId;
-
-                        let conter = map.getCenter();
-                        // http://127.0.0.1:5000/
-                        // https://pokestop-taiwan-2.herokuapp.com/
-
-                        let dd = new Date().getDate();
-                        dd = dd > 15 ? 2 : 1;
-
-                        const url = `https://pokestop-taiwan-${dd}.herokuapp.com/get_bbox_sites/${conter.lat}/${conter.lng}`
-                        fetch(url)
-                            .then(d => d.json())
-                            .then(
-                                d => setPokestops(d)
-                            );
-
-                        this.classList.toggle("use");
-                        document.getElementsByClassName('select_task')[0].classList.toggle("hide");
-
-                    }
-                })
 
             }
 
