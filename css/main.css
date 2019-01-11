@@ -81,7 +81,7 @@ img {
     cursor: pointer;
 }
 
-.info, .select_task{
+.info, .station, .select_task{
     position: fixed;
     top: 10%;
     right: 50%;
@@ -94,6 +94,10 @@ img {
     z-index: 99999;
 }
 
+.station p {
+    max-width: 250px;
+}
+
 .hide {
     display: none;
 }
@@ -104,7 +108,7 @@ img {
     display: block;
 }
 
-.info a, .info h3, .select_task *{
+.info a, .info h3, .select_task *, .station *{
     position:relative;
     margin: 10px auto;
     text-align:center;

@@ -169,11 +169,37 @@
         }
     });
 
+    // 平台轉移
+    let twpkinfo_station = L.Control.extend({
+
+        options: {
+            position: 'topleft'
+        },
+
+        onAdd: function (map) {
+            let control = L.DomUtil.create('div', 'pointer leaflet-bar leaflet-control leaflet-control-custom');
+
+            control.style.backgroundColor = 'white';
+            control.style.backgroundImage = "url(img/station_64.png)";
+            control.style.backgroundSize = "30px 30px";
+            control.style.width = '30px';
+            control.style.height = '30px';
+
+            control.onclick = function () {
+                this.classList.toggle("use");
+                document.getElementsByClassName('station')[0].classList.toggle("hide");
+            }
+
+            return control;
+        }
+    });
+
     map.addLayer(streets)
         .addControl(new locate_control())
         .addControl(new relaod_control())
         .addControl(new return_task_control())
         .addControl(new return_task_info())
+        .addControl(new twpkinfo_station())
         .on('load', onLoad)
         .on('moveend', setPosition)
         .on('moveend', setMapView)
