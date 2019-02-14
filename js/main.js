@@ -179,7 +179,7 @@
         onAdd: function (map) {
             let control = L.DomUtil.create('div', 'pointer leaflet-bar leaflet-control leaflet-control-custom');
 
-            control.style.backgroundColor = 'white';
+            control.style.backgroundColor = '#fff';
             control.style.backgroundImage = "url(img/station_64.png)";
             control.style.backgroundSize = "30px 30px";
             control.style.width = '30px';
@@ -194,12 +194,37 @@
         }
     });
 
+    // 情報圖
+    let news = L.Control.extend({
+
+        options: {
+            position: 'topleft'
+        },
+
+        onAdd: function (map) {
+            let control = L.DomUtil.create('div', 'pointer leaflet-bar leaflet-control leaflet-control-custom');
+
+            control.style.backgroundColor = '#ffd306';
+            control.style.backgroundImage = "url(img/news_64.png)";
+            control.style.backgroundSize = "30px 30px";
+            control.style.width = '30px';
+            control.style.height = '30px';
+
+            control.onclick = function () {
+                window.open('https://i.imgur.com/Nad54vp.jpg');
+            }
+
+            return control;
+        }
+    });
+
     map.addLayer(streets)
         .addControl(new locate_control())
         .addControl(new relaod_control())
         .addControl(new return_task_control())
         .addControl(new return_task_info())
         .addControl(new twpkinfo_station())
+        .addControl(new news())
         .on('load', onLoad)
         .on('moveend', setPosition)
         .on('moveend', setMapView)
