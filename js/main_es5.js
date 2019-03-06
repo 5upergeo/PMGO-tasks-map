@@ -179,7 +179,7 @@
       control.style.height = '30px';
 
       control.onclick = function () {
-        window.open('https://i.imgur.com/OEoByZI.jpg');
+        window.open('https://pbs.twimg.com/media/D09p1ceU4AAfWqU.jpg');
       };
 
       return control;
