@@ -211,7 +211,7 @@
             control.style.height = '30px';
 
             control.onclick = function () {
-                window.open('https://pbs.twimg.com/media/D09p1ceU4AAfWqU.jpg');
+                window.open('https://i.imgur.com/uMWu658.jpg');
             }
 
             return control;
