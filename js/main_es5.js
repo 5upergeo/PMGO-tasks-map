@@ -179,7 +179,7 @@
       control.style.height = '30px';
 
       control.onclick = function () {
-        window.open('https://i.imgur.com/2ZcfUC5.jpg');
+        window.open('https://i.imgur.com/v2PF2Hw.jpg');
       };
 
       return control;
