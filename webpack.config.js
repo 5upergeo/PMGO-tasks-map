@@ -34,7 +34,7 @@ module.exports = {
                         outputPath: 'images/'
                     }
                 }],
-                test: /\.(png|jpg|gif)$/
+                test: /\.(png|jpg|gif|ico)$/
             }
         ]
     },

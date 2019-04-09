@@ -1,9 +1,3 @@
-body, a {
-    padding: 0;
-    margin: 0;
-    font-family: 'Noto Sans TC', sans-serif;
-}
-
 html, body, #map {
     height: 100%;
     width: 100vw;
@@ -12,4 +6,13 @@ html, body, #map {
 .leaflet-control {
     margin-right: 10px;
     border: 0px !important;
+}
+
+.use {
+    -webkit-filter: invert(1);
+    filter: invert(1);
+}
+
+.hide {
+    display: none;
 }

@@ -108,6 +108,84 @@ eval("// extracted by mini-css-extract-plugin\n\n//# sourceURL=webpack:///./node
 
 /***/ }),
 
+/***/ "./src/css/map.css":
+/*!*************************!*\
+  !*** ./src/css/map.css ***!
+  \*************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("// extracted by mini-css-extract-plugin\n\n//# sourceURL=webpack:///./src/css/map.css?");
+
+/***/ }),
+
+/***/ "./src/css/style.css":
+/*!***************************!*\
+  !*** ./src/css/style.css ***!
+  \***************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("// extracted by mini-css-extract-plugin\n\n//# sourceURL=webpack:///./src/css/style.css?");
+
+/***/ }),
+
+/***/ "./src/data.js":
+/*!*********************!*\
+  !*** ./src/data.js ***!
+  \*********************/
+/*! exports provided: getLocation, setLocation, getData */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getLocation\", function() { return getLocation; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"setLocation\", function() { return setLocation; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getData\", function() { return getData; });\n/* harmony import */ var _urls_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./urls.js */ \"./src/urls.js\");\n\n\n// 取得座標\nfunction getLocation() {\n    const urlParams = new URLSearchParams(location.search);\n\n    const lat = urlParams.get('lat') || localStorage.getItem('lat') || 25.046266;\n    const lng = urlParams.get('lng') || localStorage.getItem('lng') || 121.517406;\n    const zoom = urlParams.get('zoom') || localStorage.getItem('zoom') || 15;\n\n    return {\n        latLng: [+lat, +lng],\n        zoom: +zoom\n    };\n};\n\n// 儲存當下座標至localStorag\nfunction setLocation(map) {\n    return () => {\n        if (!map) {\n            return;\n        }\n\n        let geo = map.getCenter();\n        let [lat, lng] = [geo.lat, geo.lng];\n\n        localStorage.setItem('lat', lat);\n        localStorage.setItem('lng', lng);\n        localStorage.setItem('zoom', map.getZoom());\n    };\n};\n\nfunction toJSON(d) {\n    return d.json();\n};\n\nfunction fetchJSON(url) {\n    return fetch(url).then(toJSON);\n};\n\nasync function fetchJSON_(url) {\n    const d = await fetch(url);\n    return toJSON(d);\n};\n\nasync function getData() {\n    return Promise.all([fetchJSON(`${_urls_js__WEBPACK_IMPORTED_MODULE_0__[\"urls\"].macros}?method=get_tasks_full_`)]);\n}\n\n//# sourceURL=webpack:///./src/data.js?");
+
+/***/ }),
+
+/***/ "./src/image/icon/direction_64.png":
+/*!*****************************************!*\
+  !*** ./src/image/icon/direction_64.png ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"images/direction_64.png\";\n\n//# sourceURL=webpack:///./src/image/icon/direction_64.png?");
+
+/***/ }),
+
+/***/ "./src/image/icon/favicon.ico":
+/*!************************************!*\
+  !*** ./src/image/icon/favicon.ico ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"images/favicon.ico\";\n\n//# sourceURL=webpack:///./src/image/icon/favicon.ico?");
+
+/***/ }),
+
+/***/ "./src/image/icon/location_64.png":
+/*!****************************************!*\
+  !*** ./src/image/icon/location_64.png ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"images/location_64.png\";\n\n//# sourceURL=webpack:///./src/image/icon/location_64.png?");
+
+/***/ }),
+
+/***/ "./src/image/icon/pikachu.gif":
+/*!************************************!*\
+  !*** ./src/image/icon/pikachu.gif ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"images/pikachu.gif\";\n\n//# sourceURL=webpack:///./src/image/icon/pikachu.gif?");
+
+/***/ }),
+
 /***/ "./src/index.js":
 /*!**********************!*\
   !*** ./src/index.js ***!
@@ -116,7 +194,7 @@ eval("// extracted by mini-css-extract-plugin\n\n//# sourceURL=webpack:///./node
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _map_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./map.js */ \"./src/map.js\");\n/* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./style.css */ \"./src/style.css\");\n/* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_style_css__WEBPACK_IMPORTED_MODULE_1__);\n\n\n\n\n//# sourceURL=webpack:///./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _map_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./map.js */ \"./src/map.js\");\n/* harmony import */ var _data_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./data.js */ \"./src/data.js\");\n/* harmony import */ var _css_style_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./css/style.css */ \"./src/css/style.css\");\n/* harmony import */ var _css_style_css__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_css_style_css__WEBPACK_IMPORTED_MODULE_2__);\n/* harmony import */ var _image_icon_favicon_ico__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./image/icon/favicon.ico */ \"./src/image/icon/favicon.ico\");\n/* harmony import */ var _image_icon_favicon_ico__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_image_icon_favicon_ico__WEBPACK_IMPORTED_MODULE_3__);\n\n\n\n\n\n\n// console.log(getData);\n\nasync function a() {\n    let data = await Object(_data_js__WEBPACK_IMPORTED_MODULE_1__[\"getData\"])();\n    console.log(data[0]);\n}\n\na();\n\n//# sourceURL=webpack:///./src/index.js?");
 
 /***/ }),
 
@@ -124,22 +202,23 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _map
 /*!********************!*\
   !*** ./src/map.js ***!
   \********************/
-/*! no exports provided */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var leaflet__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! leaflet */ \"./node_modules/leaflet/dist/leaflet-src.js\");\n/* harmony import */ var leaflet__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(leaflet__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var leaflet_dist_leaflet_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! leaflet/dist/leaflet.css */ \"./node_modules/leaflet/dist/leaflet.css\");\n/* harmony import */ var leaflet_dist_leaflet_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(leaflet_dist_leaflet_css__WEBPACK_IMPORTED_MODULE_1__);\n\n\n\nclass Map {\n    constructor() {\n        // 街道圖\n        this.streets = leaflet__WEBPACK_IMPORTED_MODULE_0___default.a.tileLayer(\"https://mt{s}.google.com/vt/x={x}&y={y}&z={z}&hl=zh-TW\", {\n            subdomains: \"012\",\n            maxZoom: 20,\n            attribution: \"Map data: &copy; Google\"\n        });\n        // 地圖物件\n        this.map = leaflet__WEBPACK_IMPORTED_MODULE_0___default.a.map(\"map\", {\n            attributionControl: false\n        });\n\n        let position = getPosition();\n        let mapLatLng = position.latLng;\n        let mapZoom = position.zoom;\n\n        this.map.addLayer(this.streets).setView(mapLatLng, mapZoom);\n    }\n\n}\n\nlet map = new Map();\n\n// 取得座標\nfunction getPosition() {\n\n    const urlParams = new URLSearchParams(location.search);\n\n    const lat = urlParams.get('lat') || localStorage.getItem('lat') || 25.046266;\n    const lng = urlParams.get('lng') || localStorage.getItem('lng') || 121.517406;\n    const zoom = urlParams.get('zoom') || localStorage.getItem('zoom') || 15;\n\n    return {\n        latLng: [+lat, +lng],\n        zoom: +zoom\n    };\n};\n\n//# sourceURL=webpack:///./src/map.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var leaflet__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! leaflet */ \"./node_modules/leaflet/dist/leaflet-src.js\");\n/* harmony import */ var leaflet__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(leaflet__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var leaflet_dist_leaflet_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! leaflet/dist/leaflet.css */ \"./node_modules/leaflet/dist/leaflet.css\");\n/* harmony import */ var leaflet_dist_leaflet_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(leaflet_dist_leaflet_css__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _image_icon_location_64_png__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./image/icon/location_64.png */ \"./src/image/icon/location_64.png\");\n/* harmony import */ var _image_icon_location_64_png__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_image_icon_location_64_png__WEBPACK_IMPORTED_MODULE_2__);\n/* harmony import */ var _image_icon_direction_64_png__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./image/icon/direction_64.png */ \"./src/image/icon/direction_64.png\");\n/* harmony import */ var _image_icon_direction_64_png__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_image_icon_direction_64_png__WEBPACK_IMPORTED_MODULE_3__);\n/* harmony import */ var _image_icon_pikachu_gif__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./image/icon/pikachu.gif */ \"./src/image/icon/pikachu.gif\");\n/* harmony import */ var _image_icon_pikachu_gif__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_image_icon_pikachu_gif__WEBPACK_IMPORTED_MODULE_4__);\n/* harmony import */ var _data_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./data.js */ \"./src/data.js\");\n/* harmony import */ var _css_map_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./css/map.css */ \"./src/css/map.css\");\n/* harmony import */ var _css_map_css__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_css_map_css__WEBPACK_IMPORTED_MODULE_6__);\n\n\n\n\n\n\n\n\n\n\nclass Map {\n    // 初始化\n    constructor() {\n        // 街道圖\n        this.streets = leaflet__WEBPACK_IMPORTED_MODULE_0___default.a.tileLayer(\"https://mt{s}.google.com/vt/x={x}&y={y}&z={z}&hl=zh-TW\", {\n            subdomains: \"012\",\n            maxZoom: 20,\n            attribution: \"Map data: &copy; Google\"\n        });\n        // 地圖物件\n        this.map = leaflet__WEBPACK_IMPORTED_MODULE_0___default.a.map(\"map\", {\n            attributionControl: false\n        });\n\n        let location = Object(_data_js__WEBPACK_IMPORTED_MODULE_5__[\"getLocation\"])();\n        let mapLatLng = location.latLng;\n        let mapZoom = location.zoom;\n\n        this.map.addLayer(this.streets).setView(mapLatLng, mapZoom);\n\n        this.direction = undefined;\n\n        this.user = leaflet__WEBPACK_IMPORTED_MODULE_0___default.a.marker(mapLatLng, {\n            icon: leaflet__WEBPACK_IMPORTED_MODULE_0___default.a.divIcon({\n                className: 'user hide',\n                iconSize: [30, 48],\n                iconAnchor: [15, 24],\n                html: `<div><img style=\"height: 48px; width: 30px;\" src=\"/images/pikachu.gif\"></div>`\n            })\n        });\n\n        if ('ondeviceorientationabsolute' in window) {\n\n            this.direction = leaflet__WEBPACK_IMPORTED_MODULE_0___default.a.marker(mapLatLng, {\n                icon: leaflet__WEBPACK_IMPORTED_MODULE_0___default.a.divIcon({\n                    className: 'direction hide',\n                    iconSize: [100, 100],\n                    iconAnchor: [50, 50],\n                    html: `<div><img style=\"height: 100px; width: 100px;\" src=\"/images/direction_64.png\"></div>`\n                })\n            });\n\n            this.map.addLayer(this.direction).addLayer(this.user);\n\n            let direction_img = document.querySelector('#map .direction img');\n            let user_img = document.querySelector('#map .user img');\n\n            // 監聽方位事件\n            window.addEventListener('deviceorientationabsolute', function (event) {\n                let alpha = event.alpha;\n\n                if (alpha !== null) {\n                    direction_img.style.Transform = `rotate(${-alpha}deg)`;\n                    direction_img.style.WebkitTransform = `rotate(${-alpha}deg)`;\n                    direction_img.style.MozTransform = `rotate(${-alpha}deg)`;\n\n                    user_img.style.Transform = `rotate(${-alpha + 180}deg)`;\n                    user_img.style.WebkitTransform = `rotate(${-alpha + 180}deg)`;\n                    user_img.style.MozTransform = `rotate(${-alpha + 180}deg)`;\n                } else {\n                    user_img.style.Transform = \"\";\n                    user_img.style.WebkitTransform = \"\";\n                    user_img.style.MozTransform = \"\";\n\n                    direction_img.style.display = \"none\";\n                }\n            }, true);\n        } else {\n            this.map.addLayer(this.user);\n        }\n\n        // 監聽GPS訊號\n        this.map.on('locationfound', e => {\n            this.user.setLatLng(e.latlng);\n            if (typeof this.direction !== \"undefined\") {\n                this.direction.setLatLng(e.latlng);\n            }\n            this.map.setView(e.latlng, this.map.getZoom());\n        }).on('moveend', Object(_data_js__WEBPACK_IMPORTED_MODULE_5__[\"setLocation\"])(this.map)).stopLocate();\n    }\n\n    // 加入控制項\n    addControl(position, icon, onclick) {\n        let control = leaflet__WEBPACK_IMPORTED_MODULE_0___default.a.Control.extend({\n\n            options: {\n                position: position\n            },\n\n            onAdd: map => {\n                let control = leaflet__WEBPACK_IMPORTED_MODULE_0___default.a.DomUtil.create('div', 'pointer leaflet-bar leaflet-control leaflet-control-custom');\n\n                control.style.backgroundColor = 'white';\n                control.style.backgroundImage = `url(${icon})`;\n                control.style.backgroundSize = \"30px 30px\";\n                control.style.width = '30px';\n                control.style.height = '30px';\n                control.style.cursor = 'pointer';\n                control.onclick = onclick(this);\n\n                return control;\n            }\n        });\n        this.map.addControl(new control());\n    }\n\n}\n\nlet map = new Map();\n\n// 加入定位控制\nmap.addControl('topleft', '/images/location_64.png', that => {\n    return e => {\n        e.target.classList.toggle(\"use\");\n        that.user._icon.classList.toggle(\"hide\");\n        that.direction._icon.classList.toggle(\"hide\");\n\n        if (typeof that.map._locateOptions === \"undefined\" || that.map._locateOptions.watch) {\n            that.map.locate({\n                watch: true,\n                maxZoom: that.map.getZoom(),\n                enableHighAccuracy: true\n            });\n        } else {\n            that.map.stopLocate();\n        }\n    };\n});\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (map);\n\n//# sourceURL=webpack:///./src/map.js?");
 
 /***/ }),
 
-/***/ "./src/style.css":
-/*!***********************!*\
-  !*** ./src/style.css ***!
-  \***********************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ "./src/urls.js":
+/*!*********************!*\
+  !*** ./src/urls.js ***!
+  \*********************/
+/*! exports provided: urls */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-eval("// extracted by mini-css-extract-plugin\n\n//# sourceURL=webpack:///./src/style.css?");
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"urls\", function() { return urls; });\nlet urls = {\n    imgHost: 'https://5upergeo.github.io/PMGO-tasks-map/img',\n    macros: 'https://script.google.com/macros/s/AKfycbyOkCaKC-q75jN8NPx4oxLvkcIyEJLDGZDKUuAZ_Rl9JufGr1Uf/exec',\n    reportTask: 'https://script.google.com/macros/s/AKfycbzMvd730XVRRCoEL13052qsOC81kwPKeWRWZJV9B60e59nXCDLZ/exec'\n};\n\n//# sourceURL=webpack:///./src/urls.js?");
 
 /***/ })
 
