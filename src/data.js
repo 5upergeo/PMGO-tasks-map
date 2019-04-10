@@ -44,7 +44,7 @@ async function fetchJSON_(url) {
 };
 
 export async function getData() {
-    return Promise.all([
+    return await Promise.all([
         fetchJSON(`${urls.macros}?method=get_tasks_full_`)
     ])
 }

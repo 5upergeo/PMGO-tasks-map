@@ -14,29 +14,29 @@ module.exports = {
     },
     module: {
         rules: [{
-                use: 'babel-loader',
-                test: /\.js$/,
-                exclude: /node_modules/
+            use: 'babel-loader',
+            test: /\.js$/,
+            exclude: /node_modules/
+        },
+        {
+            use: [{
+                loader: MiniCssExtractPlugin.loader
             },
-            {
-                use: [{
-                        loader: MiniCssExtractPlugin.loader
-                    },
-                    "css-loader"
-                ],
-                test: /\.css$/
-            },
-            {
-                use: [{
-                    loader: 'file-loader',
-                    options: {
-                        name: '[name].[ext]',
-                        outputPath: 'images/'
-                    }
-                }],
-                test: /\.(png|jpg|gif|ico)$/
-            }
-        ]
+                "css-loader"
+            ],
+            test: /\.css$/
+        },
+        {
+            use: [{
+                loader: 'file-loader',
+                options: {
+                    name: '[name].[ext]',
+                    outputPath: 'images/'
+                }
+            }],
+            test: /\.(png|jpg|gif|ico)$/
+        }]
+        }]
     },
     plugins: [
         new MiniCssExtractPlugin({
