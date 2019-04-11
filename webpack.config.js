@@ -36,7 +36,6 @@ module.exports = {
             }],
             test: /\.(png|jpg|gif|ico)$/
         }]
-        }]
     },
     plugins: [
         new MiniCssExtractPlugin({

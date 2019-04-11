@@ -9,9 +9,11 @@ import './image/icon/favicon.ico';
 
 async function task() {
     let data = await getData();
-    let tasks = new Task(data[0]).cleanTask().setIcons();
+    let tasks = new Task(data[0], data[1])
+        .cleanTask()
+        .setIcons()
+        .setMarker(map.map);
 
-    console.log(tasks);
 }
 
 task()
