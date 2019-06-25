@@ -76,6 +76,10 @@ img {
     max-width: 45VW;
 } */
 
+.leaflet-control-layers-list {
+    max-width: 600px;
+}
+
 .controlIcon {
     width: 40px;
     cursor: pointer;
